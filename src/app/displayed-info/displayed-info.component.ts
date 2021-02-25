@@ -1,8 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { ProductionService } from '../_service/production.service';
+import {filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-displayed-info',
@@ -21,6 +23,8 @@ export class DisplayedInfoComponent implements OnInit {
   type: string;
   artwork : any;
 
+  //TEST
+  private destroyed$ = new Subject();
 
   constructor(
     private route: ActivatedRoute,
@@ -33,17 +37,32 @@ export class DisplayedInfoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //security for unlogged people
+    // //security for unlogged people
     // if(!sessionStorage){
-    //   this.router.navigateByUrl('/', {skipLocationChange: true});
+    //   this.router.navigateByUrl('/login', {skipLocationChange: true});
     // }
+
+    this.router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationStart),
+      takeUntil(this.destroyed$),
+    ) .subscribe((event: NavigationStart) =>{
+      this.router.routerState.snapshot.url = event.url
+      console.log(this.router.routerState.snapshot.url);
+      this.route.params.subscribe((response) => {
+        console.log(response);
+        this.id = response.id;
+        this.type = response.type;
+        (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
+        this.artwork = response;
+        })
+      })
+
+    })
 
     //catch id from url
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
-    (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
-     this.artwork = response;
-    })
+
   }
 
 

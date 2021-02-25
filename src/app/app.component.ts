@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { User } from './_model/user.model';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { ResearchComponent} from './research/research.component'
 import { PeopleService } from './_service/people.service';
-import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -10,21 +9,23 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  //observables
-  usernames;
-
-  sessionStorage= sessionStorage
-
-
+  @ViewChild(ResearchComponent) child;
+  message;
 
   constructor(
     private http : HttpClient,
     private people : PeopleService
-    ){
+    ){}
 
+    ngAfterViewInit(){
+      this.message = this.child.message
     }
 
-  title = 'interfaceTeasers';
+  receivedMessageFromChild($event ){
+    console.log($event);
+    this.message = $event;
+  }
+
 
 
 }

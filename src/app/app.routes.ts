@@ -8,14 +8,18 @@ import { RouterModule, Routes, ActivatedRoute, ParamMap } from '@angular/router'
 import { NgModule } from '@angular/core'
 import { PageNotFoundComponent } from './_errorPage/page-not-found/page-not-found.component'
 import { AppComponent } from './app.component'
+import { VisitComponent } from './visit/visit.component'
 
 
 const ROUTES : Routes=[
-  {path:"", component: AppComponent},
-  {path : "login", component : ConnectionComponent},
-  {path:":type/:id", component: DisplayedInfoComponent},
-  {path:"404", component: PageNotFoundComponent},
-  {path :"**", redirectTo:'/404'}
+  {path: "", component: AppComponent},
+  {path: "home", component: VisitComponent,
+    children : [{path: ":type/:id", component: DisplayedInfoComponent}]
+  },
+  {path: "login", component : ConnectionComponent},
+
+  {path: "404", component: PageNotFoundComponent},
+  {path: "**", redirectTo:'/404'}
 ]
 
 @NgModule({

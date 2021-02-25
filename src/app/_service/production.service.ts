@@ -39,7 +39,7 @@ export class ProductionService {
     let patchArtworkInfo = this.http.patch("http://localhost:8000/v2/production/artwork/"+ artwokId,
                                             {
                                               [wichArtworkProperty] : newValue,
-                                             type:  type
+                                              type:  type
                                             },
                                             { observe: 'response'}
                                           )

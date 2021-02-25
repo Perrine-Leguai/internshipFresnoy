@@ -1,6 +1,5 @@
-import { Component, OnInit, TestabilityRegistry } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
 
 //imported compenent via npm for design
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -12,8 +11,8 @@ import { Artwork } from '../_model/artwork.model';
 
 //services
 import { ProductionService } from '../_service/production.service';
-import { PeopleService } from '../_service/people.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 @Component({
@@ -31,21 +30,24 @@ export class ResearchComponent implements OnInit {
   artwork : Artwork ;
   selected : string;
 
-
-  //VARIABLE A DETRUIRE
-  film: any;
+  //Sharing data with the parent component
+  message: string;
+  @Output() messageEvent = new EventEmitter<string>()
 
   constructor(
     private production : ProductionService,
-    private people : PeopleService,
-    private spinnerService : NgxSpinnerService
     ) { }
 
   ngOnInit(): void {}
 
-
   catchMediaInfo(){
-
+    //stock var to display component in the parent
+    sessionStorage.setItem('displayInfos', 'isDisplayedInfos');
+    this.message= sessionStorage.getItem('displayInfo');
+    //send var to the parent
+    this.messageEvent.emit(this.message);
+    console.log(this.message);
+    //get the filmList with what have been typed
     (this.production.getArtworkInfos(this.selected)).subscribe((response) =>{
         this.listFilms = response["objects"];
       console.log(this.listFilms);
