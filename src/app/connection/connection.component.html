@@ -1,0 +1,40 @@
+<div class="border p-3 m-5">
+
+
+   <div [hidden]="!isAlert" class="alert alert-danger" role="alert">
+
+    <span >Votre mot de passe est incorrect ou ne correspond pas à cet identifiant</span>
+  </div>
+
+  <form  id="formConnexion" (ngSubmit)="onSubmit(formContent)" #formContent="ngForm" >
+
+      <div >
+        <label for="username" class="form-label">Identifiant</label>
+        <input id="username" type="text" class="form-control" placeholder="Ex : Ninja55" name="username" (keyup)="testPseudo($event)" ngModel required>
+        <div id="usernameko" [hidden]="isUsernameOk">Ce pseudo n'existe pas</div>
+        <div id="usernameok" [hidden]="!isUsernameOk">Bienvue à bord !</div>
+      </div>
+      <!-- <div >
+        <label for="email" class="form-label">Email</label>
+        <input id="email" type="text" class="form-control"  name="email" (keyup)="testMail($event)" ngModel required>
+        <div id="emailko" [hidden]="isEmailOk">Email incorrect</div>
+        <div id="emailok" [hidden]="!isEmailOk">On vous a reconnu.e ! </div>
+      </div> -->
+      <div >
+        <label for="password" class="form-label">Mot de passe</label>
+        <!-- 7 caractères, 1 miuscule, 1 majuscule, 1 caractère spécial -->
+        <input id="password" type="password" class="form-control" placeholder="*******" name="password"
+        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$" ngModel required>
+      </div>
+
+      <div class=" d-flex justify-content-center mt-5">
+        <button type="submit" class="btn btn-primary pull-right" [disabled]="formContent.invalid"> Se connecter</button>
+    </div>
+    </form>
+
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+  <p style="color: white">
+    En chargement
+  </p>
+</ngx-spinner>

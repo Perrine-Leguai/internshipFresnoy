@@ -1,0 +1,25 @@
+<div class="container m-2">
+
+  <form id="updateFilmInfo" >
+    <!-- (ngSubmit)="onSubmit(formContent)" #formContent="ngForm" -->
+    <div class="mb-2">
+      <label for="currentFilmTitle" class="form-label" >Titre</label>
+      <input id="currentFilmTitle" type="text" class="form-control" name="title" (keypress)="addNewTitle( $event)" ngModel value={{artwork?.title}} ng-keypress="characterCode ==13">
+    </div>
+    <div [hidden]="!isTitleFilmModified" class="mb-2">
+      <label for="formerTitle" class="label">Ancien titre</label>
+      <input type="text" id="formerTitle" class="form-control" name="formerTitle" disabled value={{artwork?.title}}>
+    </div>
+
+    <div *ngFor="let link of vimeoLinks" class="mb-2">
+      <label for="link{{link}}"class="form-label">Lien pour la {{link=="VF"? ' version française': (link=="VEN"? ' version anglaise' : (link=="VODVF" ? " VOD en français" : " VOD en anglais"))}}</label>
+      <input type="text" id="link{{link}}" class="form-control" name="link{{link}}">
+    </div>
+
+    <div class="mb-2">
+      <label for="typeOfArtwork" class="form-label">Type:</label>
+      <input id="typeOfArtwork" type="text" class="form-control" name="type" disabled value={{artwork?.type}}>
+    </div>
+
+  </form>
+</div>
