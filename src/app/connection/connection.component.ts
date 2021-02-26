@@ -34,11 +34,9 @@ export class ConnectionComponent implements OnInit {
     });
   }
 
-  // allow to test if username exist or not
+  // test if username exist or not
   testPseudo(event : Event){
-
     for(var user of this.userList){
-
       if((<HTMLInputElement>event.target).value == user.username){
         this.isUsernameOk=true;
         break;
@@ -48,22 +46,6 @@ export class ConnectionComponent implements OnInit {
     }
   }
 
-  //test if mail is into the database
-  // testMail(event: Event){
-  //   for(var user of this.userList){
-
-
-  //     //faire recherche directos avec le id -> que la personne concernée -> donc le mail --> si pb = le mail ne correspond pas à l'identifiant
-  //     if((<HTMLInputElement>event.target).value == user.email){
-
-  //       this.isEmailOk=true;
-
-  //       break;
-  //     }else{
-  //       this.isEmailOk= false;
-  //     }
-  //   }
-  // }
 
   //test the pwd and catch the token to log
   onSubmit(form : NgForm){

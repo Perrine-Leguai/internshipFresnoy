@@ -1,8 +1,8 @@
-#usernameko, #emailko{
+#usernameko {
   color: red;
   font-size: smaller;
 }
-#usernameok, #emailok{
+#usernameok {
   color : green;
   font-size: smaller;
 }

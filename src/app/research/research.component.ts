@@ -50,6 +50,11 @@ export class ResearchComponent implements OnInit {
     //get the filmList with what have been typed
     (this.production.getArtworkInfos(this.selected)).subscribe((response) =>{
         this.listFilms = response["objects"];
+        //picture src processing
+        for(var film of this.listFilms){
+            film.picture = "https://api.lefresnoy.net"+ film.picture;
+          console.log(film.picture)
+        }
       console.log(this.listFilms);
     })
 

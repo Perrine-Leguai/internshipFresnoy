@@ -13,11 +13,16 @@
                   [(ngModel)]="selected" (change)="catchMediaInfo()"/>
         </div>
         <div class='offset-1'>
-          <ul id="filmInfos" class="col-12" >
-            <li *ngFor="let film of listFilms"  >
+          <ul id="filmInfos" class="col-12 list-group" role="tablist">
+            <li *ngFor="let film of listFilms"  class="list-group-item">
               <a [routerLink]="['/home/'+film?.type+'/'+film?.id]">
-                <div>
-                  {{film?.title}} {{film?.type=="film" ? "un " + film?.type : "une "+ film?.type}} de  {{film?.authors[0].user.nickname != null ? film?.authors[0].user.nickname : film?.authors[0].user.first_name +" "+film?.authors[0].user.last_name | uppercase}} -  {{film?.production_date | date:"yyyy"}}
+                <div class="row">
+                  <div class="col-2">
+                    <img src={{film?.picture}} class="filmPicture">
+                  </div>
+                  <div class="col-10">
+                    {{film?.title}} {{film?.type=="film" ? "un " + film?.type : "une "+ film?.type}} de  {{film?.authors[0].user.nickname != null ? film?.authors[0].user.nickname : film?.authors[0].user.first_name +" "+film?.authors[0].user.last_name | uppercase}} -  {{film?.production_date | date:"yyyy"}}
+                  </div>
                 </div>
               </a>
             </li>

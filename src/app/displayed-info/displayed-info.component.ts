@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationStart, ParamMap, Router, RouterEvent } from '@angular/router';
 import { ProductionService } from '../_service/production.service';
 import {filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -42,27 +42,34 @@ export class DisplayedInfoComponent implements OnInit {
     //   this.router.navigateByUrl('/login', {skipLocationChange: true});
     // }
 
-    this.router.events.pipe(
-      filter((event: RouterEvent) => event instanceof NavigationStart),
-      takeUntil(this.destroyed$),
-    ) .subscribe((event: NavigationStart) =>{
-      this.router.routerState.snapshot.url = event.url
-      console.log(this.router.routerState.snapshot.url);
-      this.route.params.subscribe((response) => {
-        console.log(response);
-        this.id = response.id;
-        this.type = response.type;
-        (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
-        this.artwork = response;
-        })
-      })
+    //old way, more complicated but to keep in mind :)
+    // this.router.events.pipe(
+    //   filter((event: RouterEvent) => event instanceof NavigationStart),
+    //   takeUntil(this.destroyed$),
+    // ) .subscribe((event: NavigationStart) =>{
+    //   this.router.routerState.snapshot.url = event.url
+    //   console.log(this.router.routerState.snapshot.url);
+    //   this.route.params.subscribe((response) => {
+    //     console.log(response);
+    //     this.id = response.id;
+    //     this.type = response.type;
+    //     (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
+    //     this.artwork = response;
+    //     })
+    //   })
 
+    // })
+
+
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      //catch id from url
+      this.id = Number(params.get('id'));
+      // find the matching artwork
+      (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
+        this.artwork = response;})
+      //catch type from url + first letter majuscule to fit with patch request
+      this.type = this.capitalizeFirstLetter(params.get('type'));
     })
-
-    //catch id from url
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-
-
   }
 
 
@@ -71,13 +78,8 @@ export class DisplayedInfoComponent implements OnInit {
     }
 
   addNewTitle(event){
-    //catch type from url + first letter majuscule to fit with patch request
-    this.type = this.capitalizeFirstLetter(this.route.snapshot.paramMap.get('type'));
-
 
     let formerTitle = this.artwork.title
-
-
     this.isTitleFilmModified = true;
     if(Number(<KeyboardEvent>event.keyCode) == 13){
       let filmTitle = (<HTMLInputElement>event.target).value;
@@ -91,7 +93,6 @@ export class DisplayedInfoComponent implements OnInit {
       this.production.patchArtworkInfo(this.id, "title", filmTitle, this.type).subscribe((response) =>{
         console.log(response);
       });
-
     };
 
   }
