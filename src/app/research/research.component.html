@@ -16,8 +16,8 @@
           <ul id="filmInfos" class="col-12 list-group" role="tablist">
             <li *ngFor="let film of listFilms"  class="list-group-item">
               <a [routerLink]="['/home/'+film?.type+'/'+film?.id]">
-                <div class="row">
-                  <div class="col-2">
+                <div class="row filmLink">
+                  <div class="col-2 filmLink">
                     <img src={{film?.picture}} class="filmPicture">
                   </div>
                   <div class="col-10">

@@ -2,3 +2,13 @@
   width : 60px;
   height: 40px;
 }
+
+li:hover  {
+  background-color : #156cd1;
+
+}
+
+.filmLink:hover{
+  color: white;
+  text-decoration: none;
+}
