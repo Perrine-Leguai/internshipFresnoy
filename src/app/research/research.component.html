@@ -18,7 +18,7 @@
               <a [routerLink]="['/home/'+film?.type+'/'+film?.id]">
                 <div class="row filmLink">
                   <div class="col-2 filmLink">
-                    <img src={{film?.picture}} class="filmPicture">
+                    <img src="http://media.lefresnoy.net/?url=https://api.lefresnoy.net/{{film?.picture}}&w=100&h=40&fmt=jpg" class="filmPicture">
                   </div>
                   <div class="col-10">
                     {{film?.title}} {{film?.type=="film" ? "un " + film?.type : "une "+ film?.type}} de  {{film?.authors[0].user.nickname != null ? film?.authors[0].user.nickname : film?.authors[0].user.first_name +" "+film?.authors[0].user.last_name | uppercase}} -  {{film?.production_date | date:"yyyy"}}
@@ -29,8 +29,6 @@
           </ul>
         </div>
       </form>
-
-
 
 
 </div>

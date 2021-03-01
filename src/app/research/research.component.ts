@@ -29,6 +29,7 @@ export class ResearchComponent implements OnInit {
   formerTitle: string ;
   artwork : Artwork ;
   selected : string;
+  picture: string ;
 
   //Sharing data with the parent component
   message: string;
@@ -44,20 +45,25 @@ export class ResearchComponent implements OnInit {
     //stock var to display component in the parent
     sessionStorage.setItem('displayInfos', 'isDisplayedInfos');
     this.message= sessionStorage.getItem('displayInfo');
-    //send var to the parent
-    this.messageEvent.emit(this.message);
-    console.log(this.message);
+
     //get the filmList with what have been typed
     (this.production.getArtworkInfos(this.selected)).subscribe((response) =>{
         this.listFilms = response["objects"];
+        console.log(this.listFilms);
         //picture src processing
-        for(var film of this.listFilms){
-            film.picture = "https://api.lefresnoy.net"+ film.picture;
-          console.log(film.picture)
-        }
-      console.log(this.listFilms);
+      for(var film of this.listFilms){
+        let regex = (/\w+\.[a-z]{3}/i);
+        this.picture = this.catchPictureFormat(film.picture);
+
+     }
+
     })
 
+   }
+
+   //to keep the file name and format
+   catchPictureFormat(string : string){
+     return string.split('\/\/\/\/\/').pop().split('/').pop();
    }
 
 
