@@ -5,6 +5,9 @@ import { ActivatedRoute, NavigationStart, ParamMap, Router, RouterEvent } from '
 import { ProductionService } from '../_service/production.service';
 import {filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { AssetsService } from '../_service/assets.service';
+
 
 @Component({
   selector: 'app-displayed-info',
@@ -12,11 +15,15 @@ import { Subject } from 'rxjs';
   styleUrls: ['./displayed-info.component.css']
 })
 export class DisplayedInfoComponent implements OnInit {
+  //icons
+  faIcon = faPenSquare;
+
   //display variables
   vimeoLinks= ['VF', 'VEN', 'VODVF', 'VODVEN'];
 
   //boolean - display div
   isTitleFilmModified: boolean;
+  isDisabled: boolean =true;
 
   //stock Variables
   id : number;
@@ -30,6 +37,7 @@ export class DisplayedInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private production : ProductionService,
     private router: Router,
+    private assets: AssetsService,
   ) {
 
    }
@@ -94,6 +102,45 @@ export class DisplayedInfoComponent implements OnInit {
         console.log(response);
       });
     };
+  }
+
+  onSubmit(form, event: Event){
+    let link = (<HTMLInputElement>event.target[0]).value;
+    let inputId = (<HTMLInputElement>event.target).id;
+
+    let position = 444;
+    let label = "teaser " + inputId;
+    let descriptionMedium = "tesear"+inputId;
+    let medium_url = link;
+    let gallery = "1"
+
+
+    //create gallery
+    let description = "teasers  "
+    var galleryDone;
+    this.assets.postNewGallery("teaser", description).subscribe((data)=> {
+      var urlGallery = data['url'] //catch gallery url to reuse in create medium
+
+      //create Medium
+      this.createMedium(position, label, descriptionMedium, null, medium_url, null, urlGallery);
+      //update Artwork with the new gallery
+      this.updateArtwork(this.id, "teaser_galleries", urlGallery, this.type);
+    });
+
+
+
+  }
+
+  createMedium(position: number, label: string, descriptionMedium: string, picture: string, medium_url : string, file: string ,gallery: string){
+    this.assets.postNewMedium(position, label, descriptionMedium, picture, medium_url, file, gallery)
+        .subscribe((response) => {
+        })
+  }
+
+  updateArtwork(id: number, whichAttribute: string, url, type: string){
+    var tabUrl= [url];
+
+    this.production.patchArtworkInfo(id, whichAttribute, tabUrl, type).subscribe((date)=>{});
 
   }
 }

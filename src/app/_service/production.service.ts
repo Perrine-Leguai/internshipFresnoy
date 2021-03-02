@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Artwork } from '../_model/artwork.model';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,15 +33,16 @@ export class ProductionService {
 
 //////////  PATCH
 
-  patchArtworkInfo( artwokId: number, wichArtworkProperty: string, newValue : string, type: string){
-    console.log(wichArtworkProperty, newValue, type);
+  patchArtworkInfo( artwokId: number, wichArtworkProperty: string, newValue : any, type: string){
+
     let patchArtworkInfo = this.http.patch("http://localhost:8000/v2/production/artwork/"+ artwokId,
                                             {
                                               [wichArtworkProperty] : newValue,
-                                              type:  type
+                                              type: type
                                             },
-                                            { observe: 'response'}
-                                          )
+                                            { observe: 'body'}
+                                          );
+      patchArtworkInfo.subscribe((date)=>{});
     return patchArtworkInfo;
   }
 

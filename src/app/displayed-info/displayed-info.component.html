@@ -2,23 +2,38 @@
 
   <form id="updateFilmInfo" >
     <!-- (ngSubmit)="onSubmit(formContent)" #formContent="ngForm" -->
-    <div class="mb-2">
-      <label for="currentFilmTitle" class="form-label" >Titre</label>
-      <input id="currentFilmTitle" type="text" class="form-control" name="title" (keypress)="addNewTitle( $event)" ngModel value={{artwork?.title}} ng-keypress="characterCode ==13">
+    <div class="mb-3 mt-3 col-11">
+      <div class="row">
+        <label for="currentFilmTitle" class="form-label col-3" >Titre</label>
+        <input id="currentFilmTitle" type="text" class="form-control col-10" name="title" (keypress)="addNewTitle( $event)" ngModel value={{artwork?.title}} ng-keypress="characterCode ==13">
+        <button type="submit" class="btn btn-outline-secondary offset-1"><fa-icon [icon]="faIcon" ></fa-icon></button>
+      </div>
     </div>
-    <div [hidden]="!isTitleFilmModified" class="mb-2">
+    <div [hidden]="!isTitleFilmModified" class="mb-2  col-11">
       <label for="formerTitle" class="label">Ancien titre</label>
       <input type="text" id="formerTitle" class="form-control" name="formerTitle" disabled value={{artwork?.title}}>
     </div>
 
-    <div *ngFor="let link of vimeoLinks" class="mb-2">
-      <label for="link{{link}}"class="form-label">Lien pour la {{link=="VF"? ' version française': (link=="VEN"? ' version anglaise' : (link=="VODVF" ? " VOD en français" : " VOD en anglais"))}}</label>
-      <input type="text" id="link{{link}}" class="form-control" name="link{{link}}">
+    <div *ngFor="let link of vimeoLinks" class="mb-3 mt-3 col-11">
+      <form  id="{{link}}" (ngSubmit)="onSubmit(formContent, $event)" #formContent="ngForm" >
+        <div class="row " >
+
+            <label for="link{{link}}" class="form-label ">Lien pour la {{link=="VF"? ' version française': (link=="VEN"? ' version anglaise' : (link=="VODVF" ? " VOD en français" : " VOD en anglais"))}}</label>
+            <input type="text" id="link{{link}}" class="form-control col-10 " name="link{{link}}" >
+            <button type="submit" class="btn btn-outline-secondary offset-1 " [disabled]="formContent.invalid" ><fa-icon [icon]="faIcon" ></fa-icon></button>
+
+          <div>
+
+          </div>
+        </div>
+      </form>
     </div>
 
-    <div class="mb-2">
-      <label for="typeOfArtwork" class="form-label">Type:</label>
-      <input id="typeOfArtwork" type="text" class="form-control" name="type" disabled value={{artwork?.type}}>
+    <div class="mb-3 col-11 mt-3">
+      <div class="row">
+        <label for="typeOfArtwork" class="form-label col-3">Type:</label>
+        <input id="typeOfArtwork" type="text" class="form-control col-10" name="type" disabled value={{artwork?.type}}>
+      </div>
     </div>
 
   </form>

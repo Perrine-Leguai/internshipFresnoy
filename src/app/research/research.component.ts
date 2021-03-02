@@ -54,7 +54,6 @@ export class ResearchComponent implements OnInit {
       for(var film of this.listFilms){
         let regex = (/\w+\.[a-z]{3}/i);
         this.picture = this.catchPictureFormat(film.picture);
-
      }
 
     })

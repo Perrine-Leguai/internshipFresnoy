@@ -31,6 +31,7 @@ export class ConnectionComponent implements OnInit {
   ngOnInit(): void {
     (this.people.getAllUsernames()).subscribe((response)=>{
       this.userList = response;
+      console.log(this.userList)
     });
   }
 
