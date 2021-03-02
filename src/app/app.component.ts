@@ -1,5 +1,6 @@
 
 import { Component } from '@angular/core';
+import { AuthenticationService } from './_service/authentication.service';
 
 
 @Component({
@@ -10,10 +11,25 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
 
-  constructor(
+  isConnected: boolean = false;
 
+
+  constructor(
+    private auth : AuthenticationService
     ){}
 
+  ngOnInit(){
+    if(sessionStorage.getItem('jwt')){
+
+      this.isConnected = true;
+    }
+  }
+
+  logout(){
+    this.auth.logout();
+    sessionStorage.clear();
+    this.isConnected = false;
+  }
 
 
 

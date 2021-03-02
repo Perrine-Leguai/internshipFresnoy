@@ -21,6 +21,9 @@ export class ConnectionComponent implements OnInit {
   //cache stockage variables
   userList
 
+  //connexion var
+  id : number;
+
   constructor(
     private people : PeopleService,
     private spinner : NgxSpinnerService,
@@ -40,6 +43,8 @@ export class ConnectionComponent implements OnInit {
     for(var user of this.userList){
       if((<HTMLInputElement>event.target).value == user.username){
         this.isUsernameOk=true;
+        this.id = user.id;
+        console.log(this.id)
         break;
       }else{
         this.isUsernameOk= false;
@@ -54,19 +59,19 @@ export class ConnectionComponent implements OnInit {
 
     const username = form.value['username'];
     const password = form.value['password'];
-    const email = form.value['email'];
 
-    this.authentication.login(username, password, email).subscribe(data => {
+
+    this.authentication.login(username, password).subscribe(data => {
       sessionStorage.setItem('jwt', JSON.stringify(data));
-      console.log('log de jwt de sessionstorage de la fonction login ' + sessionStorage.getItem('jwt'));
 
-      this.authentication.getUserInfo(sessionStorage?.getItem('id')).subscribe((userInfo) => {
+
+      this.authentication.getUserInfo(this.id).subscribe((userInfo) => {
         sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-        console.log(sessionStorage);
-      })
-        console.log(sessionStorage + "apres");
 
-      this.router.navigateByUrl('/');
+      })
+
+
+      this.router.navigateByUrl('/home');
     }, error => {
       this.spinner.hide();
       return this.isAlert = true

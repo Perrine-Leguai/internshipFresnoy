@@ -12,6 +12,7 @@ export class JwtInterceptor implements HttpInterceptor {
     }
     let jwt = JSON.parse(sessionStorage.getItem('jwt'));
 
+
     if (jwt) {
 
       request = request.clone({

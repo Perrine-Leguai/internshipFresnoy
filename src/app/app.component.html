@@ -1,8 +1,14 @@
-<div class="container col-7 mt-5 mb-5">
+<div class="container col-7 mt-5 ">
   <div id="headerPp" class="p-3 d-flex justify-content-center">
       <img src="https://www.lefresnoy.net/sites/prod/themes/babylon/images/logos/logo-fresnoy.png" alt id="logoFresnoy" class="img-fluid">
   </div>
-
+  <hr class="m-0 p-0">
+  <div id="connexionMenu" class="row d-flex justify-content-end ">
+    <div class="d-flex justify-content-end m-0 p-0">
+      <a class="nav-link " [routerLinkActiveOptions]="{exact : true}" routerLinkActive="active" [routerLink]="['/login']" [hidden]="isConnected">Se connecter</a>
+      <a class="nav-link " routerLinkActive="active"[routerLink]="['/home']" (click)="logout()" [hidden]="!isConnected">Se déconnecter</a>
+    </div>
+  </div>
   <div >
 
       <router-outlet></router-outlet>

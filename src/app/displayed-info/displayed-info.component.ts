@@ -24,6 +24,7 @@ export class DisplayedInfoComponent implements OnInit {
   //boolean - display div
   isTitleFilmModified: boolean;
   isDisabled: boolean =true;
+  isAllow: boolean =false;
 
   //stock Variables
   id : number;
@@ -45,10 +46,14 @@ export class DisplayedInfoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // //security for unlogged people
-    // if(!sessionStorage){
-    //   this.router.navigateByUrl('/login', {skipLocationChange: true});
-    // }
+    //security for unlogged people
+    let uISS = sessionStorage.getItem('userInfo')
+    if(uISS){
+      console.log(uISS)
+      this.isAllow = true;
+
+    }
+
 
     //old way, more complicated but to keep in mind :)
     // this.router.events.pipe(
@@ -56,7 +61,7 @@ export class DisplayedInfoComponent implements OnInit {
     //   takeUntil(this.destroyed$),
     // ) .subscribe((event: NavigationStart) =>{
     //   this.router.routerState.snapshot.url = event.url
-    //   console.log(this.router.routerState.snapshot.url);
+
     //   this.route.params.subscribe((response) => {
     //     console.log(response);
     //     this.id = response.id;
@@ -68,16 +73,20 @@ export class DisplayedInfoComponent implements OnInit {
 
     // })
 
+    if(this.id!=null){
+      this.id=null;
+    }else{
+      this.route.paramMap.subscribe((params: ParamMap) => {
+        //catch id from url
+        this.id = Number(params.get('id'));
+        // find the matching artwork
+        (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
+          this.artwork = response;})
+        //catch type from url + first letter majuscule to fit with patch request
+        this.type = this.capitalizeFirstLetter(params.get('type'));
+      })
+    }
 
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      //catch id from url
-      this.id = Number(params.get('id'));
-      // find the matching artwork
-      (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
-        this.artwork = response;})
-      //catch type from url + first letter majuscule to fit with patch request
-      this.type = this.capitalizeFirstLetter(params.get('type'));
-    })
   }
 
 
@@ -112,7 +121,7 @@ export class DisplayedInfoComponent implements OnInit {
     let label = "teaser " + inputId;
     let descriptionMedium = "tesear"+inputId;
     let medium_url = link;
-    let gallery = "1"
+
 
 
     //create gallery
@@ -123,8 +132,15 @@ export class DisplayedInfoComponent implements OnInit {
 
       //create Medium
       this.createMedium(position, label, descriptionMedium, null, medium_url, null, urlGallery);
+
       //update Artwork with the new gallery
-      this.updateArtwork(this.id, "teaser_galleries", urlGallery, this.type);
+      if(this.artwork.teaser_galleries){    //add a new gallery without deleting
+        this.artwork.teaser_galleries.push(urlGallery);
+        this.updateArtwork(this.id, "teaser_galleries", this.artwork.teaser_galleries, this.type);
+      }else{    //add a gallery
+        this.updateArtwork(this.id, "teaser_galleries", urlGallery, this.type);
+      }
+
     });
 
 

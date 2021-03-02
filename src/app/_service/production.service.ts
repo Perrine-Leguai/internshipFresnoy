@@ -42,7 +42,6 @@ export class ProductionService {
                                             },
                                             { observe: 'body'}
                                           );
-      patchArtworkInfo.subscribe((date)=>{});
     return patchArtworkInfo;
   }
 

@@ -13,15 +13,14 @@ export class AuthenticationService {
     private route : ActivatedRoute
     ) { }
 
-  public login(username : string, pwd :string, email: string){
+  public login(username : string, pwd :string){
     return  this.http.post("http://localhost:8000/v2/rest-auth/login/", {
       'username' : username,
-      'email' : email,
       'password' : pwd,
     })
   }
 
-  public getUserInfo(username : string){
+  public getUserInfo(username : any){
     return this.http.get('http://127.0.0.1:8000/v2/people/user/'+ username)
   }
 
@@ -29,7 +28,7 @@ export class AuthenticationService {
     this.http.post("http://localhost:8000/v2/rest-auth/logout/", {
     })
     localStorage.clear();
-    this.router.navigate(['/'], {relativeTo: this.route});
+    this.router.navigate(['/home'], {relativeTo: this.route});
 
   }
 

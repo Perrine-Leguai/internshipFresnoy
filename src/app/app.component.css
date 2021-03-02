@@ -2,7 +2,16 @@
   background-color :white;
 }
 
-
 #blankClass{
   height: 30px;
+}
+
+a{
+  text-decoration : none;
+  color : gray;
+  font-size: 0.8em;
+}
+
+#connexionMenu{
+  size: 0.8em;
 }
