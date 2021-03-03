@@ -1,26 +1,34 @@
-
-<div class="container col-11 m-4 d-flex align-items-center justify-content-center">
+<div id="containerResearch" class="container m-4  ">
 
 
 
       <!-- allow to display the full informative title film  while catchind the Object film-->
-      <form id="quickSearch" class="col-12 d-flex flex-column">
-        <div class="row col-12">
-          <fa-icon [icon]="faSearch" class=" col-1 d-flex align-items-center"></fa-icon>
+      <form id="quickSearch" class=" d-flex flex-column">
+        <div class="row ">
+          <!-- <fa-icon [icon]="faSearch" class=" col-1 d-flex align-items-center"></fa-icon> -->
           <input  list="mediaInfos" id="MediaInfosChoosen" name="MediaInfosChoosen"
-                  class="form-control col-11 dropdown-toggle"
+                  class="form-control  dropdown-toggle mb-0 pb-0"
                   data-toogle="dropdown" aria-haspopup="true" aria-expanded="false"
                   [(ngModel)]="selected" (change)="catchMediaInfo()"/>
+
+          <label for="MediaInfosChoosen">
+            <span class="field-state required error touched valid pt-0 mt-0"  ></span>
+            <span class="fr">Recherche</span>
+            <!-- <span class="en">Reasearch</span> -->
+          </label>
         </div>
-        <div class='offset-1'>
+
+
+
+        <div >
           <ul id="filmInfos" class="col-12 list-group" role="tablist">
             <li *ngFor="let film of listFilms"  class="list-group-item">
               <a [routerLink]="['/home/'+film?.type+'/'+film?.id]">
                 <div class="row filmLink">
-                  <div class="col-2 filmLink">
-                    <img src="http://media.lefresnoy.net/?url=https://api.lefresnoy.net/{{film?.picture}}&w=100&h=40&fmt=jpg" class="filmPicture">
+                  <div class="col-2 filmLink p-0 m-0">
+                    <img src="http://media.lefresnoy.net/?url=https://api.lefresnoy.net/{{film?.picture}}&w=100&h=40&fmt=jpg" class="filmPicture p-0 m-0">
                   </div>
-                  <div class="col-10">
+                  <div id="infoTitleFilm" class="col-10 p-0 m-0">
                     {{film?.title}} {{film?.type=="film" ? "un " + film?.type : "une "+ film?.type}} de  {{film?.authors[0].user.nickname != null ? film?.authors[0].user.nickname : film?.authors[0].user.first_name +" "+film?.authors[0].user.last_name | uppercase}} -  {{film?.production_date | date:"yyyy"}}
                   </div>
                 </div>
@@ -34,6 +42,6 @@
 </div>
 
 
-<hr class="col-10 d-flex justify-content-center">
+
 
 

@@ -5,7 +5,7 @@ import { ActivatedRoute, NavigationStart, ParamMap, Router, RouterEvent } from '
 import { ProductionService } from '../_service/production.service';
 import {filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { AssetsService } from '../_service/assets.service';
 
 
@@ -16,7 +16,7 @@ import { AssetsService } from '../_service/assets.service';
 })
 export class DisplayedInfoComponent implements OnInit {
   //icons
-  faIcon = faPenSquare;
+  faIcon = faPen;
 
   //display variables
   vimeoLinks= ['VF', 'VEN', 'VODVF', 'VODVEN'];
@@ -30,6 +30,7 @@ export class DisplayedInfoComponent implements OnInit {
   id : number;
   type: string;
   artwork : any;
+  names: string;
 
   //TEST
   private destroyed$ = new Subject();
@@ -49,7 +50,6 @@ export class DisplayedInfoComponent implements OnInit {
     //security for unlogged people
     let uISS = sessionStorage.getItem('userInfo')
     if(uISS){
-      console.log(uISS)
       this.isAllow = true;
 
     }
@@ -81,7 +81,10 @@ export class DisplayedInfoComponent implements OnInit {
         this.id = Number(params.get('id'));
         // find the matching artwork
         (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
-          this.artwork = response;})
+          this.artwork = response;
+          this.names = this.artwork.authors[0].user.first_name +" "+ this.artwork.authors[0].user.last_name;
+        console.log(this.artwork)})
+
         //catch type from url + first letter majuscule to fit with patch request
         this.type = this.capitalizeFirstLetter(params.get('type'));
       })

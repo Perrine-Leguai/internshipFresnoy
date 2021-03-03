@@ -1,0 +1,55 @@
+/* the whole component.html */
+/* the wholde html compoennt */
+#containerDisplayed{
+  width:100%;
+  margin-top:50px;
+  z-index: index 2;
+  padding: 40px;
+  box-shadow: 0px 0px 5px black;
+  position: relative;
+  background-color: rgba(255,255,255,0.8em);
+}
+
+/* FORM DESIGN */
+input{
+  width: 100%;
+  border: 1px solid white;
+  border-radius: 0px;
+  margin: 0px;
+  padding: 0px;
+  font-size: 19;
+  color: #4a4a4a;
+  outline: none;
+  outline-width:none;
+}
+
+input:focus {
+  background-color : #fff4e8;
+  outline-width: 0;
+  outline: none
+}
+
+.inputClass{
+  border-left: 2px solid #a8a5a5
+}
+
+label{
+  text-align: left;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  color: grey;
+  display: inline-block;
+  width: 100%;
+}
+
+.artistArtwork{
+  text-align: right;
+  font-weight: normal;
+  font-size: 15;
+  font-size: 0.8em;
+  color: grey;
+  width: 100%;
+  float: right;
+  background: white;
+}

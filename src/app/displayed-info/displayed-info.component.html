@@ -1,12 +1,18 @@
-<div class="container m-2">
+<div id="containerDisplayed" class="container m-4">
 
   <form id="updateFilmInfo" >
     <!-- (ngSubmit)="onSubmit(formContent)" #formContent="ngForm" -->
     <div class="mb-3 mt-3 col-11">
+      <label for="currentFilmTitle" class="form-label p-0 m-0 mb-1" >{{artwork?.type}}</label>
       <div class="row">
-        <label for="currentFilmTitle" class="form-label col-3" >Titre</label>
-        <input id="currentFilmTitle" type="text" class="form-control col-10" name="title" (keypress)="addNewTitle( $event)" ngModel value={{artwork?.title}} ng-keypress="characterCode ==13">
-        <button type="submit" class="btn btn-outline-secondary offset-1" [hidden]="!isAllow"><fa-icon [icon]="faIcon"></fa-icon></button>
+        <div class="inputClass col-10" >
+          <input id="currentFilmTitle" type="text" class="form-control col-10 p-0 m-0" name="title" (keypress)="addNewTitle( $event)" ngModel value={{artwork?.title}}
+          ng-keypress="characterCode ==13">
+          <hr class="p-0 m-0">
+          <input id="artistArtwork" type="text" class="artistArtwork form-control col-10 p-0 m-0" name="artistName" ngModel value={{names}}
+          disabled >
+        </div>
+        <fa-icon  [hidden]="!isAllow" [icon]="faIcon"></fa-icon>
       </div>
     </div>
     <div [hidden]="!isTitleFilmModified" class="mb-2  col-11">
