@@ -1,16 +1,12 @@
 <div class="border p-3 m-5">
-
-
    <div [hidden]="!isAlert" class="alert alert-danger" role="alert">
-
     <span >Votre mot de passe est incorrect ou ne correspond pas à cet identifiant</span>
   </div>
 
-  <form  id="formConnexion" (ngSubmit)="onSubmit(formContent)" #formContent="ngForm" >
-
+  <form  id="formConnexion" (ngSubmit)="login(formContent)" #formContent="ngForm" >
       <div >
         <label for="username" class="form-label">Identifiant</label>
-        <input id="username" type="text" class="form-control" placeholder="Ex : Ninja55" name="username" (keyup)="testPseudo($event)" ngModel required>
+        <input id="username" type="text" class="form-control" placeholder="Ex : Ninja55" name="username" (change)="testPseudo($event)" ngModel required>
         <div id="usernameko" [hidden]="isUsernameOk">Ce pseudo n'existe pas</div>
         <div id="usernameok" [hidden]="!isUsernameOk">Bienvue à bord !</div>
       </div>
@@ -24,7 +20,7 @@
 
       <div class=" d-flex justify-content-center mt-5">
         <button type="submit" class="btn btn-primary pull-right" [disabled]="formContent.invalid"> Se connecter</button>
-    </div>
+      </div>
     </form>
 
 </div>

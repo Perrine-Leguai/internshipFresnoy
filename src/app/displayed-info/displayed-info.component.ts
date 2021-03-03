@@ -86,16 +86,13 @@ export class DisplayedInfoComponent implements OnInit {
         this.type = this.capitalizeFirstLetter(params.get('type'));
       })
     }
-
   }
-
 
   capitalizeFirstLetter(word: string){
         return word.charAt(0).toUpperCase() + word.slice(1);
     }
 
   addNewTitle(event){
-
     let formerTitle = this.artwork.title
     this.isTitleFilmModified = true;
     if(Number(<KeyboardEvent>event.keyCode) == 13){
@@ -123,10 +120,8 @@ export class DisplayedInfoComponent implements OnInit {
     let medium_url = link;
 
 
-
     //create gallery
     let description = "teasers  "
-    var galleryDone;
     this.assets.postNewGallery("teaser", description).subscribe((data)=> {
       var urlGallery = data['url'] //catch gallery url to reuse in create medium
 
@@ -134,8 +129,10 @@ export class DisplayedInfoComponent implements OnInit {
       this.createMedium(position, label, descriptionMedium, null, medium_url, null, urlGallery);
 
       //update Artwork with the new gallery
-      if(this.artwork.teaser_galleries){    //add a new gallery without deleting
-        this.artwork.teaser_galleries.push(urlGallery);
+      if(this.artwork.teaser_galleries !=null){    //add a new gallery without deleting
+        var coucou = this.artwork.teaser_galleries.push(urlGallery);
+        console.log(coucou)
+        console.log(this.artwork.teaser_galleries)
         this.updateArtwork(this.id, "teaser_galleries", this.artwork.teaser_galleries, this.type);
       }else{    //add a gallery
         this.updateArtwork(this.id, "teaser_galleries", urlGallery, this.type);
@@ -154,7 +151,7 @@ export class DisplayedInfoComponent implements OnInit {
   }
 
   updateArtwork(id: number, whichAttribute: string, url, type: string){
-    var tabUrl= [url];
+    var tabUrl= url;
 
     this.production.patchArtworkInfo(id, whichAttribute, tabUrl, type).subscribe((date)=>{});
 

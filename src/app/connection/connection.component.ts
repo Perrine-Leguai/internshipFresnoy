@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from '../_service/authentication.service';
 import { PeopleService } from '../_service/people.service';
@@ -24,11 +24,17 @@ export class ConnectionComponent implements OnInit {
   //connexion var
   id : number;
 
+  //navigation var
+  returnUrl: string;
+  loading: boolean = false;
+
+
   constructor(
     private people : PeopleService,
     private spinner : NgxSpinnerService,
     private authentication : AuthenticationService,
-    private router : Router
+    private router : Router,
+    private route : ActivatedRoute,
     ) { }
 
   ngOnInit(): void {
@@ -36,6 +42,10 @@ export class ConnectionComponent implements OnInit {
       this.userList = response;
       console.log(this.userList)
     });
+
+    //return url from route parameter of default to /home
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+    console.log(this.returnUrl);
   }
 
   // test if username exist or not
@@ -54,7 +64,7 @@ export class ConnectionComponent implements OnInit {
 
 
   //test the pwd and catch the token to log
-  onSubmit(form : NgForm){
+  login(form : NgForm){
     this.spinner.show();
 
     const username = form.value['username'];
@@ -67,11 +77,10 @@ export class ConnectionComponent implements OnInit {
 
       this.authentication.getUserInfo(this.id).subscribe((userInfo) => {
         sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-
       })
 
-
-      this.router.navigateByUrl('/home');
+      console.log(this.returnUrl);
+      this.router.navigate([this.returnUrl]);
     }, error => {
       this.spinner.hide();
       return this.isAlert = true
