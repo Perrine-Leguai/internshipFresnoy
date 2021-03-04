@@ -58,6 +58,7 @@ a{
 
 .sidebar img{
   position: fixed;
+  margin-left: 10px;
 }
 
   #pageNumber_step-infos{

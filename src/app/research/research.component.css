@@ -41,6 +41,10 @@ label{
   width: 100%;
 }
 
+#rightLabel{
+  text-align: right;
+}
+
 /* list content */
 .filmPicture, .perfPicture, .installPicture{
   width : 60px;
@@ -75,6 +79,10 @@ ul{
 }
 
 li{
-
   border: none;
+}
+
+#alertSpan{
+  color:red;
+
 }

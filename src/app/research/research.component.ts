@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 
 //imported compenent via npm for design
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSquareFull } from '@fortawesome/free-solid-svg-icons';
 
 
 //model
@@ -24,7 +24,7 @@ import { User } from '../_model/user.model';
 export class ResearchComponent implements OnInit {
   //icones
   faSearch= faSearch
-
+  faSquare = faSquareFull
   //data storage variables
   artworksList : any;
   filmList : any= [];
@@ -36,8 +36,9 @@ export class ResearchComponent implements OnInit {
   picture: string ;
   artistList : User
 
-//TEST
-count : number= 0;
+  //displaying
+  error: boolean =false;
+
 
   @Output() messageEvent = new EventEmitter<string>()
 
@@ -53,10 +54,14 @@ count : number= 0;
     (this.production.getArtworkInfos(this.selected)).subscribe((response) =>{
         this.artworksList = response["objects"];
 
-      //reset
-      this.filmList=[];
-      this.installList=[];
-      this.installList=[];
+      if(this.artworksList.length==0){
+        this.error= true;
+      }
+      this.reset();
+      // this.filmList=[];
+      // this.installList=[];
+      // this.installList=[];
+
       //sort artwork by type
       for(var artwork of this.artworksList){
 
@@ -83,6 +88,12 @@ count : number= 0;
     // })
    }
 
+   //reset the lists
+   reset(){
+    this.filmList=[];
+    this.installList=[];
+    this.perfList=[];
+   }
    //to keep the file name and format
    catchPictureFormat(string : string){
      return string.split('\/\/\/\/\/').pop().split('/').pop();

@@ -11,7 +11,8 @@
                   data-toogle="dropdown" aria-haspopup="true" aria-expanded="false"
                   [(ngModel)]="selected" (change)="catchMediaInfo()"/>
 
-          <label for="MediaInfosChoosen">
+          <label for="MediaInfosChoosen" id="rightLabel">
+            <span id="alertSpan" [hidden]="!error"> Aucun résultat trouvé <fa-icon [icon]="faSquare"></fa-icon> </span>
             <span class="field-state required error touched valid pt-0 mt-0"  ></span>
             <span class="fr">Recherche</span>
             <!-- <span class="en">Reasearch</span> -->
@@ -35,7 +36,7 @@
             </div>
         </div> -->
 
-        <div  class="artworkList mb-3 mt-3 col-11" *ngIf="installList.length >0">
+        <div  class="artworkList mb-3 mt-3 col-11" *ngIf="installList.length >0" (click)="reset()">
           <label for="installInfos" class="form-label p-0 m-0 mb-1" >Installations</label>
             <ul id="installInfos" class="col-12 list-group" role="tablist" >
               <li *ngFor="let install of installList"  class="list-group-item" >

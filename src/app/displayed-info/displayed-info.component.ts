@@ -48,6 +48,7 @@ export class DisplayedInfoComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     //security for updating - staff and superuser
     let uISS = JSON.parse(sessionStorage.getItem('userInfo'));
     var profil =  uISS.profile;
