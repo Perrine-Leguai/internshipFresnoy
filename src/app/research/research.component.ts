@@ -11,7 +11,8 @@ import { Artwork } from '../_model/artwork.model';
 
 //services
 import { ProductionService } from '../_service/production.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { PeopleService } from '../_service/people.service';
+import { User } from '../_model/user.model';
 
 
 
@@ -25,39 +26,61 @@ export class ResearchComponent implements OnInit {
   faSearch= faSearch
 
   //data storage variables
-  listFilms : any;
+  artworksList : any;
+  filmList : any= [];
+  installList:any=[];
+  perfList:any=[];
   formerTitle: string ;
   artwork : Artwork ;
   selected : string;
   picture: string ;
+  artistList : User
 
-  //Sharing data with the parent component
-  message: string;
+//TEST
+count : number= 0;
+
   @Output() messageEvent = new EventEmitter<string>()
 
   constructor(
     private production : ProductionService,
+    private people: PeopleService
     ) { }
 
   ngOnInit(): void {}
 
   catchMediaInfo(){
-    //stock var to display component in the parent
-    sessionStorage.setItem('displayInfos', 'isDisplayedInfos');
-    this.message= sessionStorage.getItem('displayInfo');
-
-    //get the filmList with what have been typed
+    //get the artworkList with what have been typed
     (this.production.getArtworkInfos(this.selected)).subscribe((response) =>{
-        this.listFilms = response["objects"];
-        console.log(this.listFilms);
-        //picture src processing
-      for(var film of this.listFilms){
-        let regex = (/\w+\.[a-z]{3}/i);
-        this.picture = this.catchPictureFormat(film.picture);
+        this.artworksList = response["objects"];
+
+      //reset
+      this.filmList=[];
+      this.installList=[];
+      this.installList=[];
+      //sort artwork by type
+      for(var artwork of this.artworksList){
+
+        if(artwork.type =="film"){
+          this.filmList.push(artwork);
+
+        }else if(artwork.type =="installation"){
+          this.installList.push(artwork);
+
+        }else if(artwork.type =="performance"){
+          this.perfList.push(artwork);
+
+        }else {
+          console.log(artwork.type)
+        }
      }
+    });
 
-    })
+    // //get artist list
+    // (this.people.getUserBySearch(this.selected)).subscribe((response) => {
+    //   this.artistList= response;
+    //   console.log(this.artistList);
 
+    // })
    }
 
    //to keep the file name and format

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 //model
-import { Artist } from '../_model/artist.model';
 import { User } from '../_model/user.model';
 
 @Injectable({
@@ -18,7 +17,7 @@ export class PeopleService {
       observe : 'body',
     })
 
-    return getUsernames
+    return getUsernames;
   }
 
   //get user information by id
@@ -28,6 +27,15 @@ export class PeopleService {
     })
 
     return getInfoUser;
+  }
+
+  //get artists
+  getUserBySearch(keyup : string){
+    let getArtist = this.http.get<User>("http://127.0.0.1:8000/v2/people/user/search?q="+ keyup, {
+      observe: 'body',
+    });
+
+    return getArtist;
   }
 
 

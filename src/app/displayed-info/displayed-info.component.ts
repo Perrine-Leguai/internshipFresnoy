@@ -24,7 +24,8 @@ export class DisplayedInfoComponent implements OnInit {
   //boolean - display div
   isTitleFilmModified: boolean;
   isDisabled: boolean =true;
-  isAllow: boolean =false;
+  isAllow: boolean =false;  //only for superuser and staff
+  isContentOwner: boolean = false;  //only for the content owner. Will allow to modify some inputs
 
   //stock Variables
   id : number;
@@ -47,11 +48,11 @@ export class DisplayedInfoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //security for unlogged people
-    let uISS = sessionStorage.getItem('userInfo')
-    if(uISS){
+    //security for updating - staff and superuser
+    let uISS = JSON.parse(sessionStorage.getItem('userInfo'));
+    var profil =  uISS.profile;
+    if(uISS.is_superuser || profil.is_staff ){
       this.isAllow = true;
-
     }
 
 
@@ -82,8 +83,12 @@ export class DisplayedInfoComponent implements OnInit {
         // find the matching artwork
         (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
           this.artwork = response;
+          //create var to use in html
           this.names = this.artwork.authors[0].user.first_name +" "+ this.artwork.authors[0].user.last_name;
-        console.log(this.artwork)})
+
+          //check if the logged artist is the content owner
+          this.idArtistCheck(this.artwork.authors, profil.id);
+        })
 
         //catch type from url + first letter majuscule to fit with patch request
         this.type = this.capitalizeFirstLetter(params.get('type'));
@@ -94,6 +99,17 @@ export class DisplayedInfoComponent implements OnInit {
   capitalizeFirstLetter(word: string){
         return word.charAt(0).toUpperCase() + word.slice(1);
     }
+
+  idArtistCheck(authors : any, idLogged: number){
+    for( let author of authors){
+      console.log(author.id)
+      if(author.id == idLogged){
+        this.isContentOwner = true;
+      }
+    }
+
+  }
+
 
   addNewTitle(event){
     let formerTitle = this.artwork.title
@@ -134,8 +150,7 @@ export class DisplayedInfoComponent implements OnInit {
       //update Artwork with the new gallery
       if(this.artwork.teaser_galleries !=null){    //add a new gallery without deleting
         var coucou = this.artwork.teaser_galleries.push(urlGallery);
-        console.log(coucou)
-        console.log(this.artwork.teaser_galleries)
+
         this.updateArtwork(this.id, "teaser_galleries", this.artwork.teaser_galleries, this.type);
       }else{    //add a gallery
         this.updateArtwork(this.id, "teaser_galleries", urlGallery, this.type);

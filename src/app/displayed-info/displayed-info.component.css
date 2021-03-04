@@ -1,6 +1,6 @@
 /* the whole component.html */
 /* the wholde html compoennt */
-#containerDisplayed{
+/* #containerDisplayed{
   width:100%;
   margin-top:50px;
   z-index: index 2;
@@ -8,12 +8,12 @@
   box-shadow: 0px 0px 5px black;
   position: relative;
   background-color: rgba(255,255,255,0.8em);
-}
+} */
 
 /* FORM DESIGN */
 input{
   width: 100%;
-  border: 1px solid white;
+  border:none;
   border-radius: 0px;
   margin: 0px;
   padding: 0px;

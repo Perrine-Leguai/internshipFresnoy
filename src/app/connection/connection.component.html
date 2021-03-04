@@ -1,21 +1,30 @@
-<div class="border p-3 m-5">
+<div class=" p-3 m-5">
+  <h1 class="mt-0 pt-0 mb-5">
+    <span class="fr">Connexion</span>
+    <!-- <span class="en">Log in</span> -->
+ </h1>
+
    <div [hidden]="!isAlert" class="alert alert-danger" role="alert">
     <span >Votre mot de passe est incorrect ou ne correspond pas à cet identifiant</span>
   </div>
 
   <form  id="formConnexion" (ngSubmit)="login(formContent)" #formContent="ngForm" >
       <div >
-        <label for="username" class="form-label">Identifiant</label>
+
         <input id="username" type="text" class="form-control" placeholder="Ex : Ninja55" name="username" (change)="testPseudo($event)" ngModel required>
-        <div id="usernameko" [hidden]="isUsernameOk">Ce pseudo n'existe pas</div>
-        <div id="usernameok" [hidden]="!isUsernameOk">Bienvue à bord !</div>
+        <div class="row">
+          <div id="usernameko" class="col-6" [hidden]="isUsernameOk">Ce pseudo n'existe pas</div>
+          <div id="usernameok" class="col-6" [hidden]="!isUsernameOk">Bienvue à bord !</div>
+          <label for="username" class="form-label col-6">Identifiant</label>
+        </div>
       </div>
 
       <div >
-        <label for="password" class="form-label">Mot de passe</label>
+
         <!-- 7 caractères, 1 miuscule, 1 majuscule, 1 caractère spécial -->
         <input id="password" type="password" class="form-control" placeholder="*******" name="password"
         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$" ngModel required>
+        <label for="password" class="form-label">Mot de passe</label>
       </div>
 
       <div class=" d-flex justify-content-center mt-5">

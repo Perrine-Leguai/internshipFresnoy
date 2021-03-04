@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -28,6 +28,9 @@ export class ConnectionComponent implements OnInit {
   returnUrl: string;
   loading: boolean = false;
 
+  //data sharing
+  isConnectedComponent = "true";
+  @Output() messageEvent = new EventEmitter<string>();
 
   constructor(
     private people : PeopleService,
@@ -46,6 +49,9 @@ export class ConnectionComponent implements OnInit {
     //return url from route parameter of default to /home
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
     console.log(this.returnUrl);
+
+    this.messageEvent.emit(this.isConnectedComponent);
+
   }
 
   // test if username exist or not

@@ -26,8 +26,8 @@
         <div class="row " >
 
             <label for="link{{link}}" class="form-label ">Lien pour la {{link=="VF"? ' version française': (link=="VEN"? ' version anglaise' : (link=="VODVF" ? " VOD en français" : " VOD en anglais"))}}</label>
-            <input type="text" id="link{{link}}" class="form-control col-10 " name="link{{link}}" >
-            <button type="submit" class="btn btn-outline-secondary offset-1 " [disabled]="formContent.invalid" [hidden]="!isAllow"><fa-icon [icon]="faIcon" ></fa-icon></button>
+            <input type="text" id="link{{link}}" class="form-control col-10 " name="link{{link}}" style="border-bottom: 1px solid #b3b4b5;">
+            <button type="submit" class="ml-1 " [disabled]="formContent.invalid" [hidden]="!isAllow" style="background-color: white; border:none;"><fa-icon [icon]="faIcon" ></fa-icon></button>
 
           <div>
 
@@ -36,12 +36,12 @@
       </form>
     </div>
 
-    <div class="mb-3 col-11 mt-3">
+    <!-- <div class="mb-3 col-11 mt-3">
       <div class="row">
         <label for="typeOfArtwork" class="form-label col-3">Type:</label>
         <input id="typeOfArtwork" type="text" class="form-control col-10" name="type" disabled value={{artwork?.type}}>
       </div>
-    </div>
+    </div> -->
 
   </form>
 </div>
