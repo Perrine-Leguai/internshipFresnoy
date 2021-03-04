@@ -3,7 +3,7 @@
 
 
       <!-- allow to display the full informative title film  while catchind the Object film-->
-      <form id="quickSearch" class=" d-flex flex-column">
+      <form id="quickSearch" class="col-11 d-flex flex-column">
         <div class="row ">
           <!-- <fa-icon [icon]="faSearch" class=" col-1 d-flex align-items-center"></fa-icon> -->
           <input  list="mediaInfos" id="MediaInfosChoosen" name="MediaInfosChoosen"
@@ -41,14 +41,20 @@
             <ul id="installInfos" class="col-12 list-group" role="tablist" >
               <li *ngFor="let install of installList"  class="list-group-item" >
                 <a  [routerLink]="['/home/'+install?.type+'/'+install?.id]" >
-                  <div class="row installLink">
+                  <!-- <div class="row installLink">
                     <div class="col-2 installLink p-0 m-0">
                       <img src="http://media.lefresnoy.net/?url=https://api.lefresnoy.net/{{install?.picture}}&w=100&h=40&fmt=jpg" class="installPicture p-0 m-0">
+                    </div> -->
+                    <div id="infoTitleinstall" class=" col-12 p-0 m-0">
+                      <div class="p-0 m-0" >
+                        {{install?.title}} - {{install?.production_date | date:"yyyy"}}
+                      </div>
+                      <hr>
+                      <div style="text-align: right" class="p-0 m-0">
+                        {{install?.authors[0].user.nickname != null ? install?.authors[0].user.nickname : install?.authors[0].user.first_name +" "+(install?.authors[0].user.last_name | uppercase)}}
+                      </div>
                     </div>
-                    <div id="infoTitleinstall" class="col-10 p-0 m-0">
-                      {{install?.title}}, une installation de  {{install?.authors[0].user.nickname != null ? install?.authors[0].user.nickname : install?.authors[0].user.first_name +" "+install?.authors[0].user.last_name | uppercase}} -  {{install?.production_date | date:"yyyy"}}
-                    </div>
-                  </div>
+                  <!-- </div> -->
                 </a>
               </li>
             </ul>
