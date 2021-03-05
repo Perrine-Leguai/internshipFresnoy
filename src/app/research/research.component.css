@@ -64,12 +64,9 @@ label{
   color: grey;
 }
 
-li:hover  {
-  background-color : #156cd1;
-}
 
-.filmLink:hover, .installLink:hover, .perfLink:hover{
-  color: white;
+#infoTitleFilm:hover, #infoTitleperf:hover, #infoTitleinstall:hover, a:hover{
+  color: black;
   text-decoration: none;
 }
 
@@ -85,4 +82,8 @@ li{
 #alertSpan{
   color:red;
 
+}
+
+input, div, form:focus{
+  outline:none !important;
 }

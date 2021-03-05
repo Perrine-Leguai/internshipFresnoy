@@ -32,6 +32,7 @@ export class DisplayedInfoComponent implements OnInit {
   type: string;
   artwork : any;
   names: string;
+  teasers = [];
 
   //TEST
   private destroyed$ = new Subject();
@@ -84,6 +85,10 @@ export class DisplayedInfoComponent implements OnInit {
         // find the matching artwork
         (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
           this.artwork = response;
+
+          //to catch the teasersInfo
+          this.teasers = this.createTeaserList(this.artwork.teaser_galleries)
+
           //create var to use in html
           this.names = this.artwork.authors[0].user.first_name +" "+ this.artwork.authors[0].user.last_name;
 
@@ -103,21 +108,30 @@ export class DisplayedInfoComponent implements OnInit {
 
   idArtistCheck(authors : any, idLogged: number){
     for( let author of authors){
-      console.log(author.id)
       if(author.id == idLogged){
         this.isContentOwner = true;
       }
     }
-
   }
 
+  createTeaserList( teasersArray : any){
+    var teaserList = [];
+    for(let teaser of teasersArray){
+      var mediaLabel = teaser.media[0].description;
+      var mediaUrl    = teaser.media[0].medium_url;
+      var teaserInfo = {label : mediaLabel, url : mediaUrl};
+
+      teaserList.push(teaserInfo)
+    }
+     return teaserList;
+  }
 
   addNewTitle(event){
     let formerTitle = this.artwork.title
     this.isTitleFilmModified = true;
     if(Number(<KeyboardEvent>event.keyCode) == 13){
       let filmTitle = (<HTMLInputElement>event.target).value;
-
+      console.log('coucou')
       //patch formerTitle
       this.production.patchArtworkInfo(this.id, "former_title", formerTitle, this.type).subscribe((response) =>{
         console.log(response);
