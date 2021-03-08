@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { configVar } from './configVar';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,8 @@ import { Injectable } from '@angular/core';
 export class AssetsService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private configVar : configVar
   ) { }
 
 
@@ -16,7 +18,7 @@ export class AssetsService {
   //creat new gallery
   postNewGallery( label: string, description: string, ){
 
-    let postGallery = this.http.post("http://localhost:8000/v2/assets/gallery",
+    let postGallery = this.http.post(this.configVar.urlAsset +"gallery",
                                       {
                                         label: label,
                                         description:  description
@@ -29,7 +31,7 @@ export class AssetsService {
 
   //creat new medium
   postNewMedium (position: number, label: string, description: string, picture: string, medium: string, file: string, gallery: string ){
-    let postMedium = this.http.post("http://localhost:8000/v2/assets/medium",
+    let postMedium = this.http.post(this.configVar.urlAsset+"medium",
                                       {
                                         position : position,
                                         label: label,

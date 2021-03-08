@@ -3,17 +3,21 @@ import { Injectable } from '@angular/core';
 
 //model
 import { User } from '../_model/user.model';
+import { configVar } from './configVar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PeopleService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private configVar : configVar,
+      ) { }
 
   //get all username
   getAllUsernames(){
-    let getUsernames = this.http.get<User>("http://127.0.0.1:8000/v2/people/user", {
+    let getUsernames = this.http.get<User>(this.configVar.urlV2PeopleUser ,{
       observe : 'body',
     })
 
@@ -22,7 +26,7 @@ export class PeopleService {
 
   //get user information by id
   getUserById(id : number){
-    let getInfoUser = this.http.get<User>("http://127.0.0.1:8000/v2/people/user/"+id, {
+    let getInfoUser = this.http.get<User>(this.configVar.urlV2PeopleUser+"/"+id, {
       observe: 'body',
     })
 
@@ -31,7 +35,7 @@ export class PeopleService {
 
   //get artists
   getUserBySearch(keyup : string){
-    let getArtist = this.http.get<User>("http://127.0.0.1:8000/v2/people/user/search?q="+ keyup, {
+    let getArtist = this.http.get<User>(this.configVar.urlV2PeopleUser+"/search?q="+ keyup, {
       observe: 'body',
     });
 
