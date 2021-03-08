@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 //model
 import { User } from '../_model/user.model';
-import { configVar } from './configVar';
+import { ConfigVarsService } from './config-vars.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class PeopleService {
 
   constructor(
     private http: HttpClient,
-    private configVar : configVar,
+    private configVar : ConfigVarsService,
       ) { }
 
   //get all username

@@ -1,4 +1,12 @@
-export class ConfigVar {
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ConfigVarsService {
+
+  constructor() { }
+
   //V1 var
   urlV1ArtworkResearch  = "http://127.0.0.1:8000/v1/production/artwork/search?q=";
   urlV1Artwork          = "http://127.0.0.1:8000/v1/production/artwork/";

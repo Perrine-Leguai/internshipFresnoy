@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { configVar } from './configVar';
+import { ConfigVarsService } from './config-vars.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class AssetsService {
 
   constructor(
     private http: HttpClient,
-    private configVar : configVar
+    private configVar : ConfigVarsService,
   ) { }
 
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { configVar } from './configVar';
+import { ConfigVarsService } from './config-vars.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class AuthenticationService {
     private http: HttpClient,
     private router : Router,
     private route : ActivatedRoute,
-    private configVar : configVar,
+    private configVar : ConfigVarsService,
     ) { }
 
   public login(username : string, pwd :string){

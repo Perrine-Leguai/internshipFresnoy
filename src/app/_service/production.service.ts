@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Artwork } from '../_model/artwork.model';
-import { ConfigVar } from './configVar';
+import { ConfigVarsService } from './config-vars.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class ProductionService {
   // url_api = "http://"+ this.api_v1_login +":"+ this.api_v1_password +"@127.0.0.1:8000";
   constructor(
     private http : HttpClient,
-    private configVar : ConfigVar,
+    private configVar : ConfigVarsService,
     ) { }
 
 
