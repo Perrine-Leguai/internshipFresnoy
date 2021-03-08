@@ -24,7 +24,7 @@ export class AuthenticationService {
   }
 
   public getUserInfo(username : any){
-    return this.http.get(this.configVar.urlV2People+username)
+    return this.http.get(this.configVar.urlV2PeopleUser+"/"+username)
   }
 
   public logout(){
