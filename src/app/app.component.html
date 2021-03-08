@@ -14,7 +14,8 @@
           <a class="nav-link " routerLinkActive="active"[routerLink]="['/home']" (click)="logout()" [hidden]="!isConnected">Se déconnecter</a>
         </div>
       </div>
-      <router-outlet class="col-xs-12 col-md-offset-0 col-md-5 col-lg-4" ></router-outlet>
+      <app-research class="col-xs-12 col-md-offset-0 col-md-5 col-lg-4" ></app-research>
+      <router-outlet></router-outlet>
     </div>
   </div>
   <!-- desgin picture -->

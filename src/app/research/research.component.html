@@ -24,7 +24,7 @@
             <div id="matchingArtist">
               <ul id="ArtistInfos" class="col-12 list-group" role="tablist">
                 <li *ngFor="let artist of artistList"  class="list-group-item">
-                  <a [routerLink]="['/home/artist/'+artist?.id]">
+                  <a [routerLink]="['/artist/'+artist?.id]">
                     <div class="row artistLink">
                       <div class="col-2 filmLink p-0 m-0">
                         <img src="http://media.lefresnoy.net/?url=https://api.lefresnoy.net/{{artist?.photo}}&w=100&h=40&fmt=jpg" class="artistPhoto p-0 m-0">
@@ -40,7 +40,7 @@
           <label for="installInfos" class="form-label p-0 m-0 mb-1" >Installations</label>
             <ul id="installInfos" class="col-12 list-group" role="tablist" >
               <li *ngFor="let install of installList"  class="list-group-item" >
-                <a  [routerLink]="['/home/'+install?.type+'/'+install?.id]" >
+                <a  [routerLink]="['/'+install?.type+'/'+install?.id]" >
                   <!-- <div class="row installLink">
                     <div class="col-2 installLink p-0 m-0">
                       <img src="http://media.lefresnoy.net/?url=https://api.lefresnoy.net/{{install?.picture}}&w=100&h=40&fmt=jpg" class="installPicture p-0 m-0">
@@ -65,7 +65,7 @@
           <label for="filmInfos" class="form-label p-0 m-0 mb-1" >Films</label>
             <ul id="filmInfos" class="col-12 list-group" role="tablist" >
               <li *ngFor="let film of filmList"  class="list-group-item" >
-                <a  [routerLink]="['/home/'+film?.type+'/'+film?.id]" >
+                <a  [routerLink]="['/'+film?.type+'/'+film?.id]" >
                   <!-- <div class="row filmLink">
                     <div class="col-2 filmLink p-0 m-0">
                       <img src="http://media.lefresnoy.net/?url=https://api.lefresnoy.net/{{film?.picture}}&w=100&h=40&fmt=jpg" class="filmPicture p-0 m-0">
@@ -90,7 +90,7 @@
           <label for="perfInfos" class="form-label p-0 m-0 mb-1" >Performance</label>
             <ul id="perfInfos" class="col-12 list-group" role="tablist" >
               <li *ngFor="let perf of perfList"  class="list-group-item" >
-                <a  [routerLink]="['/home/'+perf?.type+'/'+perf?.id]" >
+                <a  [routerLink]="['/'+perf?.type+'/'+perf?.id]" >
                   <!-- <div class="row perfLink">
                     <div class="col-2 perfLink p-0 m-0">
                       <img src="http://media.lefresnoy.net/?url=https://api.lefresnoy.net/{{perf?.picture}}&w=100&h=40&fmt=jpg" class="perfPicture p-0 m-0">
@@ -111,7 +111,6 @@
             </ul>
           </div>
       </form>
-
 
 </div>
 
