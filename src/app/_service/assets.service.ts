@@ -26,6 +26,7 @@ export class AssetsService {
     return postGallery;
   }
 
+
   //creat new medium
   postNewMedium (position: number, label: string, description: string, picture: string, medium: string, file: string, gallery: string ){
     let postMedium = this.http.post("http://localhost:8000/v2/assets/medium",

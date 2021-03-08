@@ -12,7 +12,7 @@ import { VisitComponent } from './visit/visit.component'
 
 
 const ROUTES : Routes=[
-  {path: "", component: AppComponent},
+  {path: "", component: VisitComponent},
   {path: "home", component: VisitComponent,
     children : [{path: ":type/:id", component: DisplayedInfoComponent}]
   },
