@@ -1,12 +1,12 @@
-import { Location } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, ParamMap, Router, RouterEvent } from '@angular/router';
 import { ProductionService } from '../_service/production.service';
-import {filter, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+
+import { faMinus, faPen, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { AssetsService } from '../_service/assets.service';
+import { FormattingService } from '../_service/formatting.service';
 
 
 @Component({
@@ -17,9 +17,10 @@ import { AssetsService } from '../_service/assets.service';
 export class DisplayedInfoComponent implements OnInit {
   //icons
   faIcon = faPen;
+  faPlus = faPlus;
+  faMinus = faMinus;
+  faDelete = faTimes;
 
-  //display variables
-  vimeoLinks= ['VF', 'VEN', 'VODVF', 'VODVEN'];
 
   //boolean - display div
   isTitleFilmModified: boolean;
@@ -28,56 +29,41 @@ export class DisplayedInfoComponent implements OnInit {
   isContentOwner: boolean = false;  //only for the content owner. Will allow to modify some inputs
 
   //stock Variables
-  id : number;
-  type: string;
-  artwork : any;
-  names: string;
-  teasers = [];
+  id        : number;
+  type      : string;
+  artwork   : any;
+  names     : string;
+  teasers   = [];
+  process   = [];
+  mediation = [];
+  in_situ   = [];
+  press     = [];
 
-  //TEST
-  private destroyed$ = new Subject();
+  //galleries displaying
+  isContentToggled  : boolean;
+  nonEditedContent  : string;
+  content           : any;
+
 
   constructor(
-    private route: ActivatedRoute,
-    private production : ProductionService,
-    private router: Router,
-    private assets: AssetsService,
-  ) {
-
-   }
-
-
+    private route       : ActivatedRoute,
+    private production  : ProductionService,
+    private router      : Router,
+    private assets      : AssetsService,
+    private format      : FormattingService,
+  ) { }
 
   ngOnInit(): void {
 
     //security for updating - staff and superuser
-    let uISS = JSON.parse(sessionStorage.getItem('userInfo'));
-    var profil =  uISS.profile;
+    let uISS    = JSON.parse(sessionStorage.getItem('userInfo'));
+    var profil  =  uISS.profile;
     if(uISS.is_superuser || profil.is_staff ){
       this.isAllow = true;
     }
 
-
-    //old way, more complicated but to keep in mind :)
-    // this.router.events.pipe(
-    //   filter((event: RouterEvent) => event instanceof NavigationStart),
-    //   takeUntil(this.destroyed$),
-    // ) .subscribe((event: NavigationStart) =>{
-    //   this.router.routerState.snapshot.url = event.url
-
-    //   this.route.params.subscribe((response) => {
-    //     console.log(response);
-    //     this.id = response.id;
-    //     this.type = response.type;
-    //     (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
-    //     this.artwork = response;
-    //     })
-    //   })
-
-    // })
-
-    if(this.id!=null){
-      this.id=null;
+    if(this.id! = null){
+      this.id = null;
     }else{
       this.route.paramMap.subscribe((params: ParamMap) => {
         //catch id from url
@@ -86,8 +72,11 @@ export class DisplayedInfoComponent implements OnInit {
         (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
           this.artwork = response;
 
-          //to catch the teasersInfo
-          this.teasers = this.createTeaserList(this.artwork.teaser_galleries)
+          //to catch galleries content :
+
+            //to catch the teasersInfo
+            this.teasers    = this.createMediumList(this.artwork.teaser_galleries)
+            console.log(this.teasers)
 
           //create var to use in html
           this.names = this.artwork.authors[0].user.first_name +" "+ this.artwork.authors[0].user.last_name;
@@ -97,14 +86,12 @@ export class DisplayedInfoComponent implements OnInit {
         })
 
         //catch type from url + first letter majuscule to fit with patch request
-        this.type = this.capitalizeFirstLetter(params.get('type'));
+        this.type = this.format.capitalizeFirstLetter(params.get('type'));
       })
     }
   }
 
-  capitalizeFirstLetter(word: string){
-        return word.charAt(0).toUpperCase() + word.slice(1);
-    }
+
 
   idArtistCheck(authors : any, idLogged: number){
     for( let author of authors){
@@ -114,16 +101,17 @@ export class DisplayedInfoComponent implements OnInit {
     }
   }
 
-  createTeaserList( teasersArray : any){
-    var teaserList = [];
-    for(let teaser of teasersArray){
-      var mediaLabel = teaser.media[0].description;
-      var mediaUrl    = teaser.media[0].medium_url;
-      var teaserInfo = {label : mediaLabel, url : mediaUrl};
+  createMediumList( mediumsArray : any){
+    var mediumList = [];
 
-      teaserList.push(teaserInfo)
+    for(let medium of mediumsArray){
+      console.log(medium)
+      var mediaLabel = medium.media[0].description;
+      var mediaUrl   = medium.media[0].medium_url;
+      var mediumInfo = {label : mediaLabel, url : mediaUrl};
+      mediumList.push(mediumInfo)
     }
-     return teaserList;
+     return mediumList;
   }
 
   addNewTitle(event){
@@ -153,7 +141,6 @@ export class DisplayedInfoComponent implements OnInit {
     let descriptionMedium = "tesear"+inputId;
     let medium_url = link;
 
-
     //create gallery
     let description = "teasers  "
     this.assets.postNewGallery("teaser", description).subscribe((data)=> {
@@ -164,7 +151,7 @@ export class DisplayedInfoComponent implements OnInit {
 
       //update Artwork with the new gallery
       if(this.artwork.teaser_galleries !=null){    //add a new gallery without deleting
-        var coucou = this.artwork.teaser_galleries.push(urlGallery);
+        this.artwork.teaser_galleries.push(urlGallery);
 
         this.updateArtwork(this.id, "teaser_galleries", this.artwork.teaser_galleries, this.type);
       }else{    //add a gallery
@@ -185,8 +172,15 @@ export class DisplayedInfoComponent implements OnInit {
 
   updateArtwork(id: number, whichAttribute: string, url, type: string){
     var tabUrl= url;
-
     this.production.patchArtworkInfo(id, whichAttribute, tabUrl, type).subscribe((date)=>{});
+  }
 
+  toggleContent(event :Event) {
+    console.log(event)
+    this.isContentToggled = !this.isContentToggled;
+  }
+
+  delete(event){
+    console.log(event)
   }
 }

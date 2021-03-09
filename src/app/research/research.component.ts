@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 
 //imported compenent via npm for design
-import { faSearch, faSquareFull } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faSquareFull } from '@fortawesome/free-solid-svg-icons';
 
 
 //model
@@ -25,6 +25,7 @@ export class ResearchComponent implements OnInit {
   //icones
   faSearch= faSearch
   faSquare = faSquareFull
+
   //data storage variables
   artworksList : any;
   filmList : any= [];
@@ -57,10 +58,8 @@ export class ResearchComponent implements OnInit {
       if(this.artworksList.length==0){
         this.error= true;
       }
+      //reset all listes
       this.reset();
-      // this.filmList=[];
-      // this.installList=[];
-      // this.installList=[];
 
       //sort artwork by type
       for(var artwork of this.artworksList){
@@ -94,6 +93,7 @@ export class ResearchComponent implements OnInit {
     this.installList=[];
     this.perfList=[];
    }
+
    //to keep the file name and format
    catchPictureFormat(string : string){
      return string.split('\/\/\/\/\/').pop().split('/').pop();

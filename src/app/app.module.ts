@@ -19,6 +19,7 @@ import { DisplayedInfoComponent } from './displayed-info/displayed-info.componen
 import { ProductionService } from './_service/production.service';
 import { JwtInterceptor } from './_jwtInterceptor/jwtInterceptor.interceptor';
 import { PageNotFoundComponent } from './_errorPage/page-not-found/page-not-found.component';
+import { StopPropagationDirective } from './_directive/stop-propagation.directive';
 
 
 
@@ -28,7 +29,8 @@ import { PageNotFoundComponent } from './_errorPage/page-not-found/page-not-foun
     ConnectionComponent,
     ResearchComponent,
     DisplayedInfoComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    StopPropagationDirective
   ],
   imports: [
     BrowserModule,

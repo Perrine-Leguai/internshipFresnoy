@@ -1,6 +1,3 @@
-/* the whole component.html */
-/* the wholde html compoennt */
-
 
 /* FORM DESIGN */
 input{
@@ -21,11 +18,11 @@ input:focus {
   outline: none
 }
 
-.inputClass{
+.infoBlock {
   border-left: 2px solid #a8a5a5
 }
 
-label{
+label, .galleryLink {
   text-align: left;
   font-weight: normal;
   text-transform: uppercase;

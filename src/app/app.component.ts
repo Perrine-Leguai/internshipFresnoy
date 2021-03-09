@@ -26,12 +26,8 @@ export class AppComponent  {
 
   ngOnInit(){
     if(sessionStorage.getItem('jwt')){
-
       this.isConnected = true;
     }
-
-
-
   }
 
   logout(){
