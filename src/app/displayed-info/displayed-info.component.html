@@ -38,7 +38,7 @@
           <div id ="test{{artwork.id}}" *ngIf="isContentToggled" (click)="toggleContent($event)" i18n value="teasers" >
             <div appStopPropagation class="m-2 row"*ngFor="let teaser of gallerie.media">
               <a  style="color : black;" href={{teaser.medium_url}}>{{teaser.label|titlecase}}</a>
-              <button  class="ml-5" style="background-color: white; border:none;"><fa-icon [icon]="faDelete" id={{teaser.id}} (click)="delete($event.target.parentNode.id)" ></fa-icon></button>
+              <button  class="ml-5" style="background-color: white; border:none;"><fa-icon [icon]="faDelete" id={{teaser.id}} (click)="delete('medium',teaser.id)" ></fa-icon></button>
             </div>
             <fa-icon [icon]="faMinus" ></fa-icon>
           </div>

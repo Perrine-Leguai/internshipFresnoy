@@ -7,6 +7,7 @@ import { ProductionService } from '../_service/production.service';
 import { faMinus, faPen, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { AssetsService } from '../_service/assets.service';
 import { FormattingService } from '../_service/formatting.service';
+import { DeleteService } from '../_service/delete.service';
 
 
 @Component({
@@ -51,6 +52,7 @@ export class DisplayedInfoComponent implements OnInit {
     private router      : Router,
     private assets      : AssetsService,
     private format      : FormattingService,
+    private deleteServ  : DeleteService,
   ) { }
 
   ngOnInit(): void {
@@ -71,12 +73,12 @@ export class DisplayedInfoComponent implements OnInit {
         // find the matching artwork
         (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
           this.artwork = response;
-
+          console.log(this.artwork.teaser_galleries)
           //to catch galleries content :
 
             //to catch the teasersInfo
             this.teasers    = this.createMediumList(this.artwork.teaser_galleries)
-            console.log(this.teasers)
+
 
           //create var to use in html
           this.names = this.artwork.authors[0].user.first_name +" "+ this.artwork.authors[0].user.last_name;
@@ -105,7 +107,7 @@ export class DisplayedInfoComponent implements OnInit {
     var mediumList = [];
 
     for(let medium of mediumsArray){
-      console.log(medium)
+
       var mediaLabel = medium.media[0].description;
       var mediaUrl   = medium.media[0].medium_url;
       var mediumInfo = {label : mediaLabel, url : mediaUrl};
@@ -180,7 +182,8 @@ export class DisplayedInfoComponent implements OnInit {
     this.isContentToggled = !this.isContentToggled;
   }
 
-  delete(event){
-    console.log(event)
+  delete(toDelete: string, id : number){
+        this.deleteServ.delete(toDelete, id);
+        console.log(toDelete, id)
   }
 }
