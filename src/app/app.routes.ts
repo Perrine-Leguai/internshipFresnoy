@@ -8,14 +8,16 @@ import { AppComponent } from './app.component'
 //modules
 import { RouterModule, Routes, ActivatedRoute, ParamMap } from '@angular/router'
 import { NgModule } from '@angular/core'
+import { HomeComponent } from './home/home.component'
 
 
 const ROUTES : Routes=[
-  {path: "home", component: AppComponent},
+  {path: "", pathMatch: 'full', redirectTo: 'home'},
+  {path: "home", component: HomeComponent},
   {path: ":type/:id", component: DisplayedInfoComponent},
   {path: "login", component : ConnectionComponent},
   {path: "404", component: PageNotFoundComponent},
-  {path: "**", redirectTo:'/404'}
+  {path: "**", pathMatch: 'full', redirectTo:'/404'},
 ]
 
 @NgModule({

@@ -1,7 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute, NavigationStart, ParamMap, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ProductionService } from '../_service/production.service';
 
 import { faMinus, faPen, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -49,7 +48,6 @@ export class DisplayedInfoComponent implements OnInit {
   constructor(
     private route       : ActivatedRoute,
     private production  : ProductionService,
-    private router      : Router,
     private assets      : AssetsService,
     private format      : FormattingService,
     private deleteServ  : DeleteService,
@@ -58,10 +56,12 @@ export class DisplayedInfoComponent implements OnInit {
   ngOnInit(): void {
 
     //security for updating - staff and superuser
-    let uISS    = JSON.parse(sessionStorage.getItem('userInfo'));
-    var profil  =  uISS.profile;
-    if(uISS.is_superuser || profil.is_staff ){
-      this.isAllow = true;
+    if(sessionStorage.getItem('userInfo')){
+      let uISS    = JSON.parse(sessionStorage.getItem('userInfo'));
+      var profil  =  uISS.profile;
+      if(uISS.is_superuser || profil.is_staff ){
+        this.isAllow = true;
+      }
     }
 
     if(this.id! = null){
@@ -73,7 +73,7 @@ export class DisplayedInfoComponent implements OnInit {
         // find the matching artwork
         (this.production.getOneArtworkInfo(this.id)).subscribe((response) => {
           this.artwork = response;
-          console.log(this.artwork.teaser_galleries)
+
           //to catch galleries content :
 
             //to catch the teasersInfo
@@ -84,7 +84,7 @@ export class DisplayedInfoComponent implements OnInit {
           this.names = this.artwork.authors[0].user.first_name +" "+ this.artwork.authors[0].user.last_name;
 
           //check if the logged artist is the content owner
-          this.idArtistCheck(this.artwork.authors, profil.id);
+          this.idArtistCheck(this.artwork.authors, profil?.id);
         })
 
         //catch type from url + first letter majuscule to fit with patch request
@@ -134,7 +134,7 @@ export class DisplayedInfoComponent implements OnInit {
     };
   }
 
-  onSubmit(form, event: Event){
+  onSubmit( event: Event){
     let link = (<HTMLInputElement>event.target[0]).value;
     let inputId = (<HTMLInputElement>event.target).id;
 
@@ -159,11 +159,7 @@ export class DisplayedInfoComponent implements OnInit {
       }else{    //add a gallery
         this.updateArtwork(this.id, "teaser_galleries", urlGallery, this.type);
       }
-
     });
-
-
-
   }
 
   createMedium(position: number, label: string, descriptionMedium: string, picture: string, medium_url : string, file: string ,gallery: string){
@@ -178,12 +174,10 @@ export class DisplayedInfoComponent implements OnInit {
   }
 
   toggleContent(event :Event) {
-    console.log(event)
     this.isContentToggled = !this.isContentToggled;
   }
 
   delete(toDelete: string, id : number){
         this.deleteServ.delete(toDelete, id);
-        console.log(toDelete, id)
   }
 }
