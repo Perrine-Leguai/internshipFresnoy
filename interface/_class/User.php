@@ -7,7 +7,7 @@ class User {
     protected $last_name;
     protected $email;
     protected $profil;
-    protected $password;
+    
 
     // transform object to a string
     function __toString()
@@ -17,8 +17,7 @@ class User {
                 "[first_name] :" . $this->first_name  .
                 "[last_name] :" . $this->last_name  .
                 "[email] :" . $this->email  .
-                "[profil] :" . $this->profil  .
-                "[password] :" . $this->password  ;
+                "[profil] :" . $this->profil ;
     }
 
     /**
@@ -129,24 +128,5 @@ class User {
         return $this;
     }
 
-    /**
-     * Get the value of password
-     */
-    public function getPassword() :string
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set the value of password
-     *
-     * @return self
-     */
-    public function setPassword(string $password) : self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
 }
 ?>
