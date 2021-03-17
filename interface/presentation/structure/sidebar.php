@@ -1,1 +1,1 @@
-<div class="col-2" style="height: 100%"> SIDEBAR</div>
+<div class="col-2" style="height : 100%; min-height: 100vh;"> SIDEBAR</div>

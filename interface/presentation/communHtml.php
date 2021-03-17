@@ -21,16 +21,28 @@
                 
             </head>
             <body>
+            <div class="container-fluid m-2">
+        
+                <div class="row">
+                    <?php include 'structure/sidebar.php' ?>
+                    <div class="col-10">
+                        <?php include 'structure/header.php' ?>
+                        <div id="changingInside">                      
+<?php } ?>
 
-        
-            <div class="row">
-            <?php include 'structure/sidebar.php' ?>
-            <div class="container-fuid">
-                <?php include 'structure/header.php' ?>
-            </div>
-            <div>SALUUUT</div>
-            </div>
-        
+<?php 
+    function scripts(string $jsFileName){?>
+                        </div>
+                                        
+                        </div>
+                    </div>
+                </div>
+                <?php include 'structure/scripts.php'; ?>
+                <script 
+                    type="text/javascript" 
+                    src=<?php echo "../assets/" . $jsFileName . "js" ?>>
+                </script>
             </body>
+        </html>
 <?php } ?>
 
