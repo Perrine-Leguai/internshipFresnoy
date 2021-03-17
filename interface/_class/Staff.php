@@ -2,7 +2,7 @@
 require_once(__DIR__.'/User.php');
 
 
-    class Staff extends User{
+    class Staff {
         private $id;
         private $id_user;
 

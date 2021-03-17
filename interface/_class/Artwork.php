@@ -26,9 +26,9 @@
                     "[synopsis_long_fr] :" . $this->synopsis_long_fr . 
                     "[synopsis_short_en] :" . $this->synopsis_short_en  .
                     "[synopsis_long_en] :" . $this->synopsis_long_en .
-                    "[facebook] :" . $this->facebook  .
-                    "[twitter] :" . $this->twitter  .
-                    "[website] :" . $this->website ;
+                    "[created_at] :" . $this->created_at  .
+                    "[id_student] :" . $this->id_student  .
+                    "[seen] :" . $this->seen ;
         }
 
         /**
@@ -39,6 +39,20 @@
         public function getId() : int
         {
                 return $this->id;
+        }
+
+        /**
+         * Set the value of id
+         *
+         * @param $id 
+         *
+         * @return self
+         */
+        public function setId(int $id) : self
+        {
+                $this->id = $id;
+
+                return $this;
         }
 
         /**
