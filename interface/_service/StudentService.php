@@ -1,7 +1,7 @@
 <?php
-    require_once(__DIR__.'../class/Student.php');
-    require_once(__DIR__.'../dao/StudentDAO.php');
-    require_once(__DIR__.'../exception/ServiceException.php');
+    require_once(__DIR__.'/../_class/Student.php');
+    require_once(__DIR__.'/../_dao/StudentDAO.php');
+    require_once(__DIR__.'/../exception/ServiceException.php');
 
     class StudentService {
         
@@ -14,7 +14,7 @@
                 //catch create result, if well or bad done
                 return  $dao->create($student);
 
-            }catch(PDOException $serviceException){
+            }catch(DAOException $serviceException){
                 throw new ServiceException($serviceException->getMessage(), $serviceException->getCode());
             }
         }
@@ -27,7 +27,7 @@
                 //catch a tab of all students in the database
                 return $dao->searchAll();
                 
-            }catch(PDOException $serviceException){
+            }catch(DAOException $serviceException){
                 throw new ServiceException($serviceException->getMessage(), $serviceException->getCode());
             }
         }
@@ -39,7 +39,7 @@
                 //catch a tab of one row, i.e the student looked for
                 return $dao->searchBy($idStudent);
 
-            }catch(PDOException $serviceException){
+            }catch(DAOException $serviceException){
                 throw new ServiceException($serviceException->getMessage(), $serviceException->getCode());
             }
         }

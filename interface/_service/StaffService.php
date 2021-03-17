@@ -1,7 +1,7 @@
 <?php
-    require_once(__DIR__.'../class/Staff.php');
-    require_once(__DIR__.'../dao/StaffDAO.php');
-    require_once(__DIR__.'../exception/ServiceException.php');
+    require_once(__DIR__.'/../_class/Staff.php');
+    require_once(__DIR__.'/../_dao/StaffDAO.php');
+    require_once(__DIR__.'/../exception/ServiceException.php');
 
     class StaffService {
         
@@ -14,7 +14,7 @@
                 //catch create result, if well or bad done
                 return  $dao->create($idStaff);
 
-            }catch(PDOException $serviceException){
+            }catch(DAOException $serviceException){
                 throw new ServiceException($serviceException->getMessage(), $serviceException->getCode());
             }
         }

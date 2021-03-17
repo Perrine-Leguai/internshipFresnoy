@@ -1,7 +1,7 @@
 <?php
-    require_once(__DIR__.'../class/Update.php');
-    require_once(__DIR__.'../dao/UpdateDAO.php');
-    require_once(__DIR__.'../exception/ServiceException.php');
+    require_once(__DIR__.'/../_class/Update.php');
+    require_once(__DIR__.'/../_dao/UpdateDAO.php');
+    require_once(__DIR__.'/../exception/ServiceException.php');
 
     class UpdateService {
         
@@ -14,7 +14,7 @@
                 //catch create result, if well or bad done
                 return  $dao->create($update);
 
-            }catch(PDOException $serviceException){
+            }catch(DAOException $serviceException){
                 throw new ServiceException($serviceException->getMessage(), $serviceException->getCode());
             }
         }
@@ -26,7 +26,7 @@
                 //catch a tab of one row, i.e the student looked for
                 return $dao->searchByArtworkId($idUpdate);
 
-            }catch(PDOException $serviceException){
+            }catch(DAOException $serviceException){
                 throw new ServiceException($serviceException->getMessage(), $serviceException->getCode());
             }
         }
@@ -38,7 +38,7 @@
                 //catch a tab of all the not seen update, where seen = false
                 return $dao->researchByNotSeen();
 
-            }catch(PDOException $serviceException){
+            }catch(DAOException $serviceException){
                 throw new ServiceException($serviceException->getMessage(), $serviceException->getCode());
             }
         }
