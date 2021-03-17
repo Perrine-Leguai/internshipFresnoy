@@ -1,5 +1,5 @@
 <?php
-    require_once(__DIR__.'../exception/PDOException.php');
+    require_once(__DIR__.'/../exception/DAOException.php');
     require_once(__DIR__.'/Connection.php');
     
     class StaffDAO extends Connection{
@@ -15,7 +15,7 @@
                 //return rs to display success message after adding
                 return $rs;
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
     }

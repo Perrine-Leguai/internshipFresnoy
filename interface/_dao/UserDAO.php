@@ -1,8 +1,8 @@
 <?php
-    require_once(__DIR__.'../exception/PDOException.php');
+    require_once(__DIR__.'/../exception/DAOException.php');
     require_once(__DIR__.'/Connection.php');
     
-    class UserDAO extends Connection implements InterfaceDao{
+    class UserDAO extends Connection {
 
         //add new user
         public function create(Object $user){
@@ -31,7 +31,7 @@
                 //return rs to display success message after adding
                 return $rs;
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 
@@ -46,7 +46,7 @@
                 return $data;
 
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 
@@ -68,7 +68,7 @@
                 return $data;
 
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 

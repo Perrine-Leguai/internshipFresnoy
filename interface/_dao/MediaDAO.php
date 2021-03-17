@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__.'../exception/PDOException.php');
+require_once(__DIR__.'/../exception/DAOException.php');
 require_once(__DIR__.'/Connection.php');
-require_once(__DIR__.'../interface/InterfaceDao.php');
+require_once(__DIR__.'/../interface/InterfaceDao.php');
 
     class MediaDAO extends Connection{
         
@@ -27,7 +27,7 @@ require_once(__DIR__.'../interface/InterfaceDao.php');
                 return $rs;
 
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 
@@ -43,7 +43,7 @@ require_once(__DIR__.'../interface/InterfaceDao.php');
 
                 return $rs;
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 
@@ -65,7 +65,7 @@ require_once(__DIR__.'../interface/InterfaceDao.php');
                 return $data;
 
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 

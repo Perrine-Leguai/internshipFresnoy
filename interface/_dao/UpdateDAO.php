@@ -1,5 +1,5 @@
 <?php
-    require_once(__DIR__.'../exception/PDOException.php');
+    require_once(__DIR__.'/../exception/DAOException.php');
     require_once(__DIR__.'/Connection.php');
     
     class UpdateDAO extends Connection {
@@ -34,7 +34,7 @@
                 return $rs;
 
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 
@@ -57,7 +57,7 @@
                 return $data;
 
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 
@@ -78,7 +78,7 @@
                 return $data;
 
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 

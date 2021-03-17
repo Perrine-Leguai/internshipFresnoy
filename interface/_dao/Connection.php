@@ -1,6 +1,6 @@
 <?php
 
-require_once('../exception/PDOException.php');
+require_once(__DIR__.'/../exception/DAOException.php');
 
     class Connection{
         public static function connect() {
