@@ -3,7 +3,7 @@
     require_once(__DIR__.'/Connection.php');
     require_once(__DIR__.'../interface/InterfaceDao.php');
 
-    class ArtworkDao extends Connection implements InterfaceDao{
+    class ArtworkDAO extends Connection implements InterfaceDao{
         
 
         //add new artwork
@@ -47,23 +47,7 @@
             }
         }
 
-        //delete an artwork
-        public function delete(Int $idArtwork){
-            try{
-                //connect to the bdd
-                $db= Connection::connect(); 
-
-                $stmt=$db->prepare("DELETE FROM artwork WHERE id=:idArtwork"); 
-                $stmt->bindParam(':idArtwork', $idArtwork);
-                $rs=$stmt->execute();
-
-                return $rs;
-            }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
-            }
-        }
-
-        //serach all artwork 
+        //search all artwork 
         public function searchAll(){
             try{
 
@@ -79,7 +63,7 @@
         }
 
         //search artwork by student
-        public function searchBy(Int $idStudent){
+        public function searchByStudentId(Int $idStudent){
             try{
                 //connect to the bdd
                 $db= Connection::connect(); 

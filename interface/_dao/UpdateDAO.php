@@ -1,5 +1,7 @@
 <?php
-
+    require_once(__DIR__.'../exception/PDOException.php');
+    require_once(__DIR__.'/Connection.php');
+    
     class UpdateDAO extends Connection {
         
         //add new update
@@ -37,7 +39,7 @@
         }
 
         //search updates by artwork
-        public function searchBy(Int $idArtwork){
+        public function searchByArtworkId(Int $idArtwork){
             try{
                 //connect to the bdd
                 $db= Connection::connect(); 

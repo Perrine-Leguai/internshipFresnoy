@@ -1,5 +1,7 @@
 <?php
-
+    require_once(__DIR__.'../exception/PDOException.php');
+    require_once(__DIR__.'/Connection.php');
+    
     class StaffDAO extends Connection{
 
         public function create(int $idUser){
