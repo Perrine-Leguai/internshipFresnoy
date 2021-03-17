@@ -1,7 +1,8 @@
 <?php
-    require_once(__DIR__.'../exception/PDOException.php');
+    require_once(__DIR__.'/../exception/DAOException.php');
     require_once(__DIR__.'/Connection.php');
-    require_once(__DIR__.'../interface/InterfaceDao.php');
+    require_once(__DIR__.'/../interface/InterfaceDao.php');
+    require_once(__DIR__.'/../_class/Artwork.php');
 
     class ArtworkDAO extends Connection implements InterfaceDao{
         
@@ -43,7 +44,7 @@
                 //return rs to display success message after adding
                 return $rs;
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 
@@ -58,7 +59,7 @@
                 return $data;
                 
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 
@@ -77,10 +78,18 @@
                 //free the memory
                 $stmt->closeCursor();
                 
-                return $data;
+                //stock info into Artwork object
+                $artwork = new Artwork();
+                $artwork->setId($data['id'])->setTitle($data['title'])->setSubtitle($data['subtitle'])
+                        ->setType($data['type'])->setDuration($data['duration'])
+                        ->setSynopsisShortFr($data['synopsis_short_fr'])->setSynopsisLongFr($data['synopsis_long_fr'])
+                        ->setSynopsisShortEn($data['synopsis_short_en'])->setSynopsisLongEn($data['synospsis_long_en'])
+                        ->setCreatedAt($data['created_at'])->setIdStudent($data['id_student'])->setSeen($data['seen']);
+                
+                return $artwork;
 
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 
@@ -101,7 +110,7 @@
                 return $data;
 
             }catch(PDOException $e){
-                throw new PDOException($e->getMessage(), $e->getCode());
+                throw new DAOException($e->getMessage(), $e->getCode());
             }
         }
 
