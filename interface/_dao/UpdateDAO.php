@@ -1,5 +1,6 @@
 <?php
     require_once(__DIR__.'/../exception/DAOException.php');
+    require_once(__DIR__.'/../_class/Update.php');
     require_once(__DIR__.'/Connection.php');
     
     class UpdateDAO extends Connection {
@@ -50,11 +51,22 @@
 
                 //store the result into data, returns an array indexed by column name 
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                
+
                 //free the memory
                 $stmt->closeCursor();
+
+                //transform $data into a tab of obj Update
+                $i=0;
+                foreach($data as $update){
+                    $update_obj = new Update();
+                    $update_obj ->setId($update['id'])->setUpdatedDate($update['updated_date'])->setInputName($update['input_name'])
+                                ->setOldContent($update['old_content'])->setNewContent($update['new_content'])
+                                ->setIdArtwork($update['id_artwork'])->setIsSeen($update['seen']) ;
+                    $update_tab[$i]= $update_obj;
+                    $i++;
+                }
                 
-                return $data;
+                return $update_tab;
 
             }catch(PDOException $e){
                 throw new DAOException($e->getMessage(), $e->getCode());

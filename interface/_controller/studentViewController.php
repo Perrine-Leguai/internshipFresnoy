@@ -15,11 +15,16 @@
     ////////////////////////////////////////FAKE INITIALISATION////////////////////
     $_SESSION['idStudent']  = 1;
     $session_artwork_obj = ArtworkService::searchBy($_SESSION['idStudent']);
+    $list_of_updates    = UpdateService::searchByAwId($session_artwork_obj->getId());
     
     //display the global html
     html('Etudiant.e.s');
 
+    //form for creation and update
     formCreateArtwork($session_artwork_obj);
+
+    //list of updates doen by the student
+    updatesList($list_of_updates);
     
     //display the scripts
     scripts('countdown');
@@ -111,7 +116,6 @@
                     echo $ServiceException->getCode();
                 }
                 
-
             }
                 
         }

@@ -20,7 +20,7 @@
         }
 
         //search update by artwork
-        public function searchByAwId(Int $idUpdate){
+        public static function searchByAwId(Int $idUpdate){
             try{
                 $dao = new UpdateDAO();
                 //catch a tab of one row, i.e the student looked for
@@ -32,7 +32,7 @@
         }
 
         //search update by seen 
-        public function searchByNotSeen(){
+        public static function searchByNotSeen(){
             try{
                 $dao = new UpdateDAO();
                 //catch a tab of all the not seen update, where seen = false

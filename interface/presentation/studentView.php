@@ -44,3 +44,28 @@
             <input type="submit" class="btn btn-outline-secondary mt-4" value="<?php if(!empty($artwork) || $artwork != null){ echo 'Modifier ';}else{echo 'Ajouter ';};?>"></input>
         </form>
 <?php   } ?>
+
+<?php
+    function updatesList($updates_list){ ?>
+        <div id="updates_list" style="border: 3px solid grey;">
+            <?php   $i=0;
+                    foreach($updates_list as $update){ ?>
+                    
+                    <div id='update<?=$i?>'>
+                        <div id="change_date"><?= $update->getUpdatedDate() ;?></div>
+                        <div id="input_name"><?= $update->getInputName()?></div>
+                        <div class="row">
+                            <div id="old_content" style="color: red;" class="col-6"><?= $update->getOldContent() ;?></div>
+                            <div id="new_content" style="color: green;" class="col-6"><?= $update->getNewContent() ;?></div>
+                        </div>
+                        <div id="seen" class="d-flex justify-content-end font-weight-light font-italic" style="color:grey; font-size: 0,7em; ">
+                            <?php if($update->getIsSeen()== 0){ echo "non vue" ;}else{echo "vue" ;}?>
+                        </div>
+                        
+                    
+                    </div>
+
+            <?php   $i++ ;
+                    }?>
+        </div>
+<?php } ?>
