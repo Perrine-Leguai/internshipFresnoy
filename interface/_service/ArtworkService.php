@@ -56,9 +56,17 @@
             }
         }
 
-        // public function update(Object $objet, int $idOdbjectToModify){
+        //update an artwork identified by its id
+        public static function update(Object $objet, int $id_object_to_modify){
+            try{
+                $dao = new ArtworkDAO();
+                //catch a tab of all the not seen artwork, where seen = false
+                return $dao->update($objet, $id_object_to_modify);
 
-        // }
+            }catch(DAOException $serviceException){
+                throw new ServiceException($serviceException->getMessage(), $serviceException->getCode());
+            }
+        }
 
         
 

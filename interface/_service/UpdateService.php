@@ -31,7 +31,7 @@
             }
         }
 
-        //search updtae by seen 
+        //search update by seen 
         public function searchByNotSeen(){
             try{
                 $dao = new UpdateDAO();
